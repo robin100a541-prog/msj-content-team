@@ -10,119 +10,435 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --navy:   #1B2A6B;
       --yellow: #F5C518;
+      --yellow-light: #FFE57A;
       --blue:   #4AAFFF;
-      --bg:     #04060F;
+      --navy:   #1B2A6B;
+      --bg:     #060810;
       --card:   #0D1120;
-      --card2:  #111827;
       --border: rgba(255,255,255,0.07);
       --text:   #FFFFFF;
       --sub:    #9BAAB8;
       --dim:    #3D4D63;
     }
 
-    html, body { background: var(--bg); color: var(--text); font-family: "Inter", sans-serif; min-height: 100vh; }
-
-    body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 56px 20px 80px;
-      overflow-x: hidden;
+    html, body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Inter", sans-serif;
+      min-height: 100vh;
     }
 
-    /* ── Background ── */
+    body { overflow-x: hidden; }
+
+    /* ── BG effects ── */
     .bg-fx {
       position: fixed; inset: 0; pointer-events: none; z-index: 0;
       background:
-        radial-gradient(ellipse 60% 40% at 50% 0%, rgba(245,197,24,0.07) 0%, transparent 60%),
-        radial-gradient(ellipse 40% 30% at 80% 90%, rgba(74,175,255,0.06) 0%, transparent 60%);
+        radial-gradient(ellipse 70% 50% at 50% 0%,   rgba(245,197,24,0.07) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 40% at 85% 80%,  rgba(74,175,255,0.05) 0%, transparent 60%),
+        radial-gradient(ellipse 30% 30% at 10% 70%,  rgba(27,42,107,0.18) 0%, transparent 60%);
     }
 
-    .page {
+    /* ── Wrapper ── */
+    .wrap {
       position: relative; z-index: 1;
-      width: 100%; max-width: 560px;
-      display: flex; flex-direction: column; align-items: center;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
     }
 
-    /* ── Logo ── */
-    .logo-wrap { margin-bottom: 44px; }
-    .logo-wrap img { height: 80px; width: auto; display: block; }
-
-    /* ── Badge ── */
-    .badge {
-      display: inline-flex; align-items: center; gap: 7px;
-      background: rgba(245,197,24,0.1); border: 1px solid rgba(245,197,24,0.3);
-      color: var(--yellow); font-size: 11px; font-weight: 700;
-      letter-spacing: 0.09em; text-transform: uppercase;
-      padding: 5px 14px; border-radius: 100px; margin-bottom: 32px;
+    /* ════════════════════════════════
+       NAV
+    ════════════════════════════════ */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 0 48px;
+      gap: 16px;
+      flex-wrap: wrap;
     }
-    .pulse { width: 6px; height: 6px; background: var(--yellow); border-radius: 50%; animation: pls 2s ease-in-out infinite; }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    /* SVG logo badge */
+    .nav-brand svg.emblem {
+      flex-shrink: 0;
+    }
+
+    .nav-brand-text {}
+    .nav-brand-name {
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      color: #fff;
+      line-height: 1.1;
+    }
+    .nav-brand-tag {
+      font-size: 11px;
+      color: var(--sub);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      margin-top: 2px;
+    }
+
+    .nav-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(245,197,24,0.08);
+      border: 1px solid rgba(245,197,24,0.28);
+      color: var(--yellow);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      padding: 7px 16px;
+      border-radius: 100px;
+    }
+    .pulse {
+      width: 6px; height: 6px;
+      background: var(--yellow);
+      border-radius: 50%;
+      animation: pls 2s ease-in-out infinite;
+    }
     @keyframes pls { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.3;transform:scale(0.6)} }
 
-    /* ── Headline ── */
-    .headline { text-align: center; margin-bottom: 22px; }
-    .hl-static { display: block; font-size: clamp(30px, 6.5vw, 48px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.1; color: #fff; text-shadow: 0 0 40px rgba(255,255,255,0.12), 0 2px 8px rgba(0,0,0,0.6); }
-    .hl-row { display: block; font-size: clamp(30px, 6.5vw, 48px); font-weight: 900; letter-spacing: -0.03em; line-height: 1.15; min-height: 1.2em; margin-top: 2px; }
-    .hl-typed {
-      background: linear-gradient(90deg, var(--yellow), #FFE57A);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    /* ════════════════════════════════
+       HERO — 2-col
+    ════════════════════════════════ */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+      margin-bottom: 56px;
     }
+
+    /* ── Left col ── */
+    .hero-left {}
+
+    .hl-static {
+      display: block;
+      font-size: clamp(36px, 5vw, 58px);
+      font-weight: 900;
+      letter-spacing: -0.035em;
+      line-height: 1.05;
+      color: #fff;
+      text-shadow: 0 0 60px rgba(255,255,255,0.08);
+    }
+    .hl-row {
+      display: block;
+      font-size: clamp(36px, 5vw, 58px);
+      font-weight: 900;
+      letter-spacing: -0.035em;
+      line-height: 1.1;
+      min-height: 1.2em;
+      margin-top: 0;
+    }
+    .hl-typed {
+      background: linear-gradient(90deg, var(--yellow), var(--yellow-light), var(--yellow));
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 20px rgba(245,197,24,0.5)) drop-shadow(0 0 5px rgba(245,197,24,0.3));
+      animation: shimmer-txt 3s linear infinite;
+    }
+    @keyframes shimmer-txt { 0%{background-position:0% center} 100%{background-position:200% center} }
     .cursor {
-      display: inline-block; width: 3px; height: 0.78em; background: var(--yellow);
-      border-radius: 2px; vertical-align: middle; margin-left: 3px;
+      display: inline-block; width: 3px; height: 0.8em;
+      background: var(--yellow); border-radius: 2px;
+      vertical-align: middle; margin-left: 3px;
       animation: blink 0.65s step-end infinite;
     }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
-    /* ── Sub ── */
-    .sub { font-size: 15px; color: var(--sub); line-height: 1.7; text-align: center; max-width: 420px; margin-bottom: 36px; }
+    .hero-sub {
+      font-size: 16px;
+      color: var(--sub);
+      line-height: 1.7;
+      margin-top: 20px;
+      max-width: 400px;
+    }
 
-    /* ── Proof ── */
-    .proof { display: flex; align-items: center; gap: 12px; margin-bottom: 36px; flex-wrap: wrap; justify-content: center; }
+    .proof {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 28px;
+      flex-wrap: wrap;
+    }
     .av-stack { display: flex; }
-    .av { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--bg); margin-left: -7px; overflow: hidden; }
+    .av {
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      border: 2px solid var(--bg);
+      margin-left: -8px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
     .av:first-child { margin-left: 0; }
-    .proof-sep { width: 1px; height: 20px; background: var(--border); }
+    .stars { color: var(--yellow); font-size: 14px; letter-spacing: 2px; }
     .proof-text { font-size: 13px; color: var(--sub); }
     .proof-text b { color: #fff; font-weight: 700; }
-    .stars { color: var(--yellow); font-size: 12px; letter-spacing: 1.5px; }
 
-    /* ── Card ── */
-    .card {
-      width: 100%;
+    /* ── Right col — Book mockup ── */
+    .hero-right {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .book-wrap {
+      position: relative;
+      width: 280px;
+    }
+
+    /* glow behind book */
+    .book-wrap::before {
+      content: "";
+      position: absolute;
+      inset: -30px;
+      background: radial-gradient(ellipse at center, rgba(245,197,24,0.15) 0%, transparent 70%);
+      pointer-events: none;
+      animation: book-glow 3s ease-in-out infinite alternate;
+    }
+    @keyframes book-glow {
+      0%  { opacity: 0.6; transform: scale(0.95); }
+      100%{ opacity: 1;   transform: scale(1.05); }
+    }
+
+    .book {
+      position: relative;
+      width: 240px;
+      margin: 0 auto;
+      animation: float 4s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%,100%{ transform: translateY(0) rotate(-2deg); }
+      50%    { transform: translateY(-10px) rotate(-2deg); }
+    }
+
+    /* ════════════════════════════════
+       QUOTE STRIP
+    ════════════════════════════════ */
+    .quote-strip {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 20px;
-      padding: 32px 28px;
-      margin-bottom: 12px;
+      padding: 28px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 32px;
       position: relative;
       overflow: hidden;
     }
-    .card::before {
+    .quote-strip::before {
+      content: "";
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(245,197,24,0.4), transparent);
+    }
+    .quote-left {}
+    .quote-mark {
+      font-size: 48px;
+      line-height: 1;
+      color: rgba(245,197,24,0.18);
+      font-family: Georgia, serif;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+    .quote-text {
+      font-size: 17px;
+      font-style: italic;
+      color: #D0DBE8;
+      line-height: 1.55;
+      max-width: 560px;
+    }
+    .quote-attr {
+      font-size: 13px;
+      color: var(--dim);
+      margin-top: 12px;
+      font-weight: 600;
+    }
+    .quote-player {
+      flex-shrink: 0;
+      width: 90px;
+      opacity: 0.85;
+    }
+
+    /* ════════════════════════════════
+       3-COL FEATURES
+    ════════════════════════════════ */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .feat {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px 20px;
+      text-align: center;
+      transition: border-color 0.2s;
+    }
+    .feat:hover { border-color: rgba(245,197,24,0.2); }
+    .feat-icon {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: rgba(245,197,24,0.08);
+      border: 1px solid rgba(245,197,24,0.2);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 14px;
+    }
+    .feat-icon svg { width: 22px; height: 22px; color: var(--yellow); }
+    .feat-title {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .feat-desc {
+      font-size: 13px;
+      color: var(--sub);
+      line-height: 1.55;
+    }
+
+    /* ════════════════════════════════
+       CTA SECTION
+    ════════════════════════════════ */
+    .cta-section {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 40px;
+      background: linear-gradient(90deg, #F5C518, #FFE066, #F5C518);
+      background-size: 200% auto;
+      color: #0A0E1A;
+      font-size: 17px;
+      font-weight: 900;
+      font-family: inherit;
+      border: none;
+      border-radius: 100px;
+      cursor: pointer;
+      letter-spacing: -0.01em;
+      animation: btn-shimmer 2.4s linear infinite, btn-pulse 2.6s ease-out infinite;
+      box-shadow: 0 0 0 0 rgba(245,197,24,0.4);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.15s;
+      text-decoration: none;
+    }
+    .cta-btn::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.28) 50%, transparent 70%);
+      background-size: 200% 100%;
+      animation: btn-gloss 2.4s linear infinite;
+      border-radius: 100px;
+      pointer-events: none;
+    }
+    .cta-btn:hover { transform: translateY(-2px); }
+    .cta-btn:active { transform: scale(0.98); }
+    .cta-icon {
+      width: 32px; height: 32px;
+      background: rgba(0,0,0,0.15);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    @keyframes btn-shimmer { 0%{background-position:0% center} 100%{background-position:200% center} }
+    @keyframes btn-gloss   { 0%{background-position:150% 0} 100%{background-position:-50% 0} }
+    @keyframes btn-pulse   {
+      0%  { box-shadow: 0 0 24px rgba(245,197,24,0.3), 0 0 0 0   rgba(245,197,24,0.4); }
+      60% { box-shadow: 0 0 32px rgba(245,197,24,0.4), 0 0 0 18px rgba(245,197,24,0); }
+      100%{ box-shadow: 0 0 24px rgba(245,197,24,0.3), 0 0 0 0   rgba(245,197,24,0); }
+    }
+
+    .cta-note {
+      margin-top: 14px;
+      font-size: 12px;
+      color: var(--dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+    .cta-note span::before { content: "•"; margin-right: 6px; }
+
+    /* ════════════════════════════════
+       FORM MODAL (shown on CTA click)
+    ════════════════════════════════ */
+    .modal-overlay {
+      display: none;
+      position: fixed; inset: 0; z-index: 100;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(6px);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: var(--card);
+      border: 1px solid rgba(245,197,24,0.2);
+      border-radius: 24px;
+      padding: 40px 36px;
+      width: 100%;
+      max-width: 480px;
+      position: relative;
+      animation: modal-in 0.3s cubic-bezier(0.34,1.46,0.64,1);
+    }
+    @keyframes modal-in { from{transform:scale(0.88);opacity:0} to{transform:scale(1);opacity:1} }
+    .modal::before {
       content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-      width: 55%; height: 1px;
+      width: 60%; height: 1px;
       background: linear-gradient(90deg, transparent, rgba(245,197,24,0.5), transparent);
     }
 
-    /* ── Bullets ── */
-    .bullets { list-style: none; display: flex; flex-direction: column; gap: 13px; margin-bottom: 28px; }
-    .bullets li { display: flex; align-items: flex-start; gap: 11px; font-size: 14px; color: var(--sub); line-height: 1.55; }
-    .chk {
-      flex-shrink: 0; margin-top: 1px; width: 18px; height: 18px; border-radius: 50%;
-      background: rgba(245,197,24,0.1); border: 1px solid rgba(245,197,24,0.3);
+    .modal-close {
+      position: absolute; top: 16px; right: 16px;
+      width: 30px; height: 30px;
+      background: rgba(255,255,255,0.06);
+      border: none; border-radius: 50%;
+      color: var(--sub); font-size: 16px; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s;
     }
-    .chk svg { width: 8px; height: 8px; }
+    .modal-close:hover { background: rgba(255,255,255,0.1); }
 
-    .rule { height: 1px; background: var(--border); margin: 0 0 22px; }
+    .modal-title {
+      font-size: 22px; font-weight: 900;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+    .modal-title span { color: var(--yellow); }
+    .modal-sub { font-size: 14px; color: var(--sub); margin-bottom: 24px; line-height: 1.5; }
 
-    /* ── Form ── */
     .field { position: relative; margin-bottom: 10px; }
-    .field-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--dim); display: flex; pointer-events: none; }
+    .field-icon {
+      position: absolute; left: 14px; top: 50%;
+      transform: translateY(-50%);
+      color: var(--dim); display: flex; pointer-events: none;
+    }
     .field-icon svg { width: 15px; height: 15px; }
-
     input {
       width: 100%; padding: 14px 14px 14px 42px;
       background: rgba(255,255,255,0.04);
@@ -131,42 +447,30 @@
       transition: border-color 0.18s, box-shadow 0.18s;
     }
     input::placeholder { color: #2A3A50; }
-    input:focus { border-color: rgba(245,197,24,0.45); box-shadow: 0 0 0 3px rgba(245,197,24,0.07); }
+    input:focus { border-color: rgba(245,197,24,0.4); box-shadow: 0 0 0 3px rgba(245,197,24,0.07); }
 
-    /* input typing animation — letter-by-letter highlight */
-    input.typing { border-color: rgba(74,175,255,0.5); box-shadow: 0 0 0 3px rgba(74,175,255,0.08); }
-
-    .btn {
-      width: 100%; margin-top: 4px; padding: 15px;
+    .modal-btn {
+      width: 100%; margin-top: 6px; padding: 15px;
       background: linear-gradient(90deg, #F5C518, #FFE066, #F5C518);
       background-size: 200% auto;
-      color: #0A0E1A;
-      font-size: 15px; font-weight: 800; font-family: inherit;
+      color: #0A0E1A; font-size: 15px; font-weight: 800; font-family: inherit;
       border: none; border-radius: 10px; cursor: pointer;
-      transition: transform 0.15s, box-shadow 0.15s;
-      box-shadow: 0 0 24px rgba(245,197,24,0.3), 0 0 0 0 rgba(245,197,24,0.4);
+      animation: btn-shimmer 2.4s linear infinite, btn-pulse 2.6s ease-out infinite;
       display: flex; align-items: center; justify-content: center; gap: 7px;
-      animation: btn-shimmer 2.4s linear infinite, btn-pulse 2.4s ease-out infinite;
       position: relative; overflow: hidden;
+      transition: transform 0.15s;
     }
-    .btn::after {
-      content: "";
-      position: absolute; inset: 0;
-      background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+    .modal-btn::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.28) 50%, transparent 70%);
       background-size: 200% 100%;
       animation: btn-gloss 2.4s linear infinite;
-      border-radius: 10px;
-      pointer-events: none;
+      border-radius: 10px; pointer-events: none;
     }
-    @keyframes btn-shimmer { 0%{background-position:0% center} 100%{background-position:200% center} }
-    @keyframes btn-gloss   { 0%{background-position:150% 0} 100%{background-position:-50% 0} }
-    @keyframes btn-pulse   { 0%{box-shadow:0 0 24px rgba(245,197,24,0.3),0 0 0 0 rgba(245,197,24,0.4)} 60%{box-shadow:0 0 32px rgba(245,197,24,0.4),0 0 0 14px rgba(245,197,24,0)} 100%{box-shadow:0 0 24px rgba(245,197,24,0.3),0 0 0 0 rgba(245,197,24,0)} }
-    .btn:hover { opacity: 0.88; transform: translateY(-1px); box-shadow: 0 4px 32px rgba(245,197,24,0.3); }
-    .btn:active { transform: scale(0.98); }
-    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .modal-btn:hover { transform: translateY(-1px); }
+    .modal-btn:disabled { opacity: 0.5; animation: none; cursor: not-allowed; }
     .btn-arr { transition: transform 0.18s; }
-    .btn:hover .btn-arr { transform: translateX(3px); }
-
+    .modal-btn:hover .btn-arr { transform: translateX(3px); }
     .lock-note { display: flex; align-items: center; justify-content: center; gap: 5px; margin-top: 12px; font-size: 12px; color: var(--dim); }
 
     /* ── Success ── */
@@ -179,40 +483,58 @@
       animation: pop 0.5s cubic-bezier(0.34,1.56,0.64,1);
     }
     @keyframes pop { from{transform:scale(0);opacity:0} to{transform:scale(1);opacity:1} }
-    #success h2 { font-size: 26px; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 8px; }
+    #success h2 { font-size: 24px; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 8px; }
     #success h2 span { color: var(--yellow); }
-    #success p { font-size: 14px; color: var(--sub); line-height: 1.65; margin-bottom: 24px; }
-    .success-sub { font-size: 13px; color: var(--blue) !important; margin-top: -16px !important; margin-bottom: 22px !important; font-weight: 600; }
-    .success-btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 15px 32px; background: var(--yellow); color: #0A0E1A;
-      font-weight: 800; font-size: 15px; border-radius: 10px; text-decoration: none;
-      transition: opacity 0.15s, transform 0.15s; box-shadow: 0 0 28px rgba(245,197,24,0.25);
+    #success p { font-size: 14px; color: var(--sub); line-height: 1.65; margin-bottom: 8px; }
+    .success-note { color: var(--blue) !important; font-weight: 600; font-size: 13px !important; margin-bottom: 22px !important; }
+    .success-link {
+      display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px;
+      background: linear-gradient(90deg, #F5C518, #FFE066, #F5C518);
+      background-size: 200% auto;
+      color: #0A0E1A; font-weight: 800; font-size: 15px; border-radius: 10px;
+      text-decoration: none;
+      animation: btn-shimmer 2.4s linear infinite, btn-pulse 2.6s ease-out infinite;
+      position: relative; overflow: hidden;
+      transition: transform 0.15s;
     }
-    .success-btn:hover { opacity: 0.88; transform: translateY(-1px); }
-
-    /* ── Confetti canvas ── */
-    #confetti-canvas {
-      position: fixed; inset: 0; pointer-events: none; z-index: 999;
+    .success-link::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.28) 50%, transparent 70%);
+      background-size: 200% 100%;
+      animation: btn-gloss 2.4s linear infinite;
+      border-radius: 10px; pointer-events: none;
     }
+    .success-link:hover { transform: translateY(-1px); }
 
-    /* ── Testimonials ── */
-    .testi-wrap { width: 100%; margin-top: 44px; }
-    .sec-label { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+    /* ════════════════════════════════
+       TESTIMONIALS
+    ════════════════════════════════ */
+    .sec-label {
+      display: flex; align-items: center; gap: 14px; margin-bottom: 20px;
+    }
     .sec-line { flex: 1; height: 1px; background: var(--border); }
     .sec-label span { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); white-space: nowrap; }
 
-    .testi-list { display: flex; flex-direction: column; gap: 10px; }
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .testi-grid .testi:first-child {
+      grid-column: 1 / -1;
+    }
+
     .testi {
       background: var(--card); border: 1px solid var(--border);
       border-radius: 16px; padding: 20px 20px 16px;
       text-align: left; transition: border-color 0.18s;
     }
     .testi:hover { border-color: rgba(245,197,24,0.18); }
-    .testi.big { border-color: rgba(245,197,24,0.15); background: linear-gradient(150deg, rgba(245,197,24,0.04) 0%, var(--card) 60%); }
+    .testi.big { border-color: rgba(245,197,24,0.14); background: linear-gradient(150deg, rgba(245,197,24,0.04) 0%, var(--card) 60%); }
     .t-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px; }
     .t-stars { color: var(--yellow); font-size: 11px; letter-spacing: 2px; }
-    .t-quote { font-size: 30px; line-height: 1; color: rgba(245,197,24,0.12); font-family: Georgia, serif; font-weight: 900; }
+    .t-quote { font-size: 28px; line-height: 1; color: rgba(245,197,24,0.12); font-family: Georgia, serif; font-weight: 900; }
     .t-body { font-size: 13.5px; color: #7A8FA6; line-height: 1.65; margin-bottom: 16px; font-style: italic; }
     .t-body b { color: #dde6f0; font-style: normal; font-weight: 600; }
     .t-foot { display: flex; align-items: center; gap: 10px; }
@@ -222,16 +544,33 @@
     .t-ver { margin-left: auto; font-size: 10px; font-weight: 700; color: var(--blue); letter-spacing: 0.04em; display: flex; align-items: center; gap: 4px; }
     .t-ver svg { width: 11px; height: 11px; }
 
-    footer { margin-top: 40px; font-size: 11px; color: var(--dim); display: flex; align-items: center; gap: 14px; }
+    /* ── Footer ── */
+    footer { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 11px; color: var(--dim); display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; }
     footer a { color: var(--dim); text-decoration: none; }
     footer a:hover { color: var(--sub); }
     .fdot { width: 3px; height: 3px; border-radius: 50%; background: var(--dim); }
 
-    @media (max-width: 400px) {
-      .card { padding: 24px 18px; }
-      .testi { padding: 16px 16px 14px; }
-      body { padding: 40px 14px 64px; }
-      .logo-wrap img { height: 60px; }
+    /* ── Confetti ── */
+    #confetti-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 200; }
+
+    /* ════════════════════════════════
+       RESPONSIVE
+    ════════════════════════════════ */
+    @media (max-width: 720px) {
+      .hero { grid-template-columns: 1fr; gap: 36px; }
+      .hero-right { order: -1; }
+      .book { width: 180px; }
+      .features { grid-template-columns: 1fr; }
+      .testi-grid { grid-template-columns: 1fr; }
+      .testi-grid .testi:first-child { grid-column: auto; }
+      .quote-strip { flex-direction: column; }
+      .quote-player { display: none; }
+      .modal { padding: 32px 22px; }
+    }
+    @media (max-width: 460px) {
+      .wrap { padding: 0 16px 60px; }
+      nav { padding: 20px 0 36px; }
+      .cta-btn { font-size: 15px; padding: 16px 28px; }
     }
   </style>
 </head>
@@ -239,175 +578,261 @@
   <canvas id="confetti-canvas"></canvas>
   <div class="bg-fx"></div>
 
-  <div class="page">
+  <div class="wrap">
 
-    <!-- Logo -->
-    <div class="logo-wrap">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 90" height="72" aria-label="My Soccer Journey">
-  <!-- MY SOCCER JOURNEY text -->
-  <text x="0" y="28" font-family="Inter,Arial,sans-serif" font-weight="900" font-size="26" fill="#FFFFFF" letter-spacing="-0.5">MY</text>
-  <text x="0" y="57" font-family="Inter,Arial,sans-serif" font-weight="900" font-size="26" fill="#FFFFFF" letter-spacing="-0.5">SOCCER</text>
-  <text x="0" y="86" font-family="Inter,Arial,sans-serif" font-weight="900" font-size="26" fill="#FFFFFF" letter-spacing="-0.5">JOURNEY</text>
-  <!-- Yellow divider bar -->
-  <rect x="148" y="4" width="4" height="80" fill="#F5C518" rx="2"/>
-  <!-- Outer navy ring (broken arc — open at top-right) -->
-  <path d="M 236 45
-    m -38 0
-    a 38 38 0 1 1 29 -26"
-    fill="none" stroke="#1B2A6B" stroke-width="7" stroke-linecap="round"/>
-  <!-- Yellow filled inner circle -->
-  <circle cx="236" cy="45" r="30" fill="#F5C518"/>
-  <!-- Orange sun -->
-  <circle cx="236" cy="26" r="9" fill="#E8501A"/>
-  <!-- Mountain left -->
-  <polygon points="210,68 228,36 246,68" fill="#1B2A6B" opacity="0.7"/>
-  <!-- Mountain right (smaller) -->
-  <polygon points="228,68 242,44 256,68" fill="#1B2A6B" opacity="0.5"/>
-  <!-- Player silhouette (simple) -->
-  <ellipse cx="236" cy="37" rx="4" ry="4" fill="#0A0E1A"/>
-  <rect x="233" y="41" width="6" height="12" rx="2" fill="#0A0E1A"/>
-  <line x1="233" y1="46" x2="228" y2="52" stroke="#0A0E1A" stroke-width="2" stroke-linecap="round"/>
-  <line x1="239" y1="46" x2="244" y2="52" stroke="#0A0E1A" stroke-width="2" stroke-linecap="round"/>
-  <line x1="234" y1="53" x2="232" y2="62" stroke="#0A0E1A" stroke-width="2" stroke-linecap="round"/>
-  <line x1="238" y1="53" x2="240" y2="62" stroke="#0A0E1A" stroke-width="2" stroke-linecap="round"/>
-</svg>
-    </div>
-
-    <!-- Badge -->
-    <div class="badge"><div class="pulse"></div>Free Guide — Limited Access</div>
-
-    <!-- Headline -->
-    <div class="headline">
-      <span class="hl-static">Stop Playing</span>
-      <span class="hl-row">
-        <span class="hl-typed" id="hl-typed"></span><span class="cursor"></span>
-      </span>
-    </div>
-
-    <!-- Sub -->
-    <p class="sub">By <strong style="color:#fff">Rehan Rayani</strong> — Founder of MySoccerJourney. Get the free framework built on the <strong style="color:var(--yellow)">6 Pillars of Football</strong> that top players use to eliminate fear and perform at their best.</p>
-
-    <!-- Proof -->
-    <div class="proof">
-      <div class="av-stack">
-        <div class="av"><svg viewBox="0 0 28 28"><rect width="28" height="28" fill="#1B2A6B"/><text x="14" y="19" text-anchor="middle" font-size="12" fill="#fff" font-family="Inter,sans-serif" font-weight="700">M</text></svg></div>
-        <div class="av"><svg viewBox="0 0 28 28"><rect width="28" height="28" fill="#1E5A9C"/><text x="14" y="19" text-anchor="middle" font-size="12" fill="#fff" font-family="Inter,sans-serif" font-weight="700">J</text></svg></div>
-        <div class="av"><svg viewBox="0 0 28 28"><rect width="28" height="28" fill="#7C3AED"/><text x="14" y="19" text-anchor="middle" font-size="12" fill="#fff" font-family="Inter,sans-serif" font-weight="700">A</text></svg></div>
-        <div class="av"><svg viewBox="0 0 28 28"><rect width="28" height="28" fill="#065F46"/><text x="14" y="19" text-anchor="middle" font-size="12" fill="#fff" font-family="Inter,sans-serif" font-weight="700">R</text></svg></div>
-        <div class="av"><svg viewBox="0 0 28 28"><rect width="28" height="28" fill="#92400E"/><text x="14" y="19" text-anchor="middle" font-size="12" fill="#fff" font-family="Inter,sans-serif" font-weight="700">K</text></svg></div>
+    <!-- ══ NAV ══ -->
+    <nav>
+      <div class="nav-brand">
+        <!-- MSJ emblem SVG -->
+        <svg class="emblem" width="58" height="58" viewBox="0 0 58 58" xmlns="http://www.w3.org/2000/svg">
+          <!-- Outer broken navy ring -->
+          <path d="M 29 4 A 25 25 0 1 1 50 42" fill="none" stroke="#1B2A6B" stroke-width="5" stroke-linecap="round"/>
+          <!-- Yellow fill circle -->
+          <circle cx="29" cy="29" r="19" fill="#F5C518"/>
+          <!-- Orange sun -->
+          <circle cx="29" cy="16" r="5.5" fill="#E8501A"/>
+          <!-- Mountains -->
+          <polygon points="14,44 24,26 34,44" fill="#1B2A6B" opacity="0.75"/>
+          <polygon points="24,44 32,30 40,44" fill="#1B2A6B" opacity="0.5"/>
+          <!-- Player head -->
+          <circle cx="29" cy="26" r="3" fill="#060810"/>
+          <!-- Player body -->
+          <rect x="26.5" y="29" width="5" height="8" rx="1.5" fill="#060810"/>
+          <!-- Arms -->
+          <line x1="26.5" y1="32" x2="22" y2="36" stroke="#060810" stroke-width="1.6" stroke-linecap="round"/>
+          <line x1="31.5" y1="32" x2="36" y2="36" stroke="#060810" stroke-width="1.6" stroke-linecap="round"/>
+          <!-- Legs -->
+          <line x1="27.5" y1="37" x2="25" y2="43" stroke="#060810" stroke-width="1.6" stroke-linecap="round"/>
+          <line x1="30.5" y1="37" x2="33" y2="43" stroke="#060810" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+        <div class="nav-brand-text">
+          <div class="nav-brand-name">MY SOCCER JOURNEY</div>
+          <div class="nav-brand-tag">Growth. Mindset. Performance.</div>
+        </div>
       </div>
-      <span class="stars">★★★★★</span>
-      <div class="proof-sep"></div>
-      <span class="proof-text"><b>500+ players</b> already inside</span>
-    </div>
+      <div class="nav-badge">
+        <div class="pulse"></div>
+        Free Guide — Limited Access
+      </div>
+    </nav>
 
-    <!-- Card -->
-    <div class="card">
-      <div id="form-area">
-        <ul class="bullets">
-          <li><div class="chk"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4 3,6.5 7,1.5" stroke="#F5C518" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>The 6 Pillars that permanently rewire how you think under pressure</li>
-          <li><div class="chk"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4 3,6.5 7,1.5" stroke="#F5C518" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Why fear is quietly costing you games — and how to shut it off for good</li>
-          <li><div class="chk"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4 3,6.5 7,1.5" stroke="#F5C518" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>The daily 5-minute ritual elite players use to stay locked in</li>
-          <li><div class="chk"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4 3,6.5 7,1.5" stroke="#F5C518" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>How to perform at your peak even when stakes are highest</li>
-        </ul>
-        <div class="rule"></div>
+    <!-- ══ HERO ══ -->
+    <section class="hero">
+      <div class="hero-left">
+        <span class="hl-static">Stop Playing</span>
+        <span class="hl-row">
+          <span class="hl-typed" id="hl-typed"></span><span class="cursor"></span>
+        </span>
 
-        <!-- Email input with live animation -->
-        <div class="field">
-          <span class="field-icon"><svg viewBox="0 0 15 15" fill="none"><path d="M7.5 8a2.75 2.75 0 1 0 0-5.5A2.75 2.75 0 0 0 7.5 8zm-4.5 5c0-2.485 2.015-4.5 4.5-4.5s4.5 2.015 4.5 4.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
-          <input type="text" id="name" placeholder="Your first name" autocomplete="given-name" />
-        </div>
-
-        <div class="field" id="email-field-wrap">
-          <span class="field-icon" id="email-icon">
-            <svg id="icon-envelope" viewBox="0 0 15 15" fill="none"><rect x="1" y="3" width="13" height="9" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M1 5.5l6.5 4 6.5-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-          </span>
-          <input type="email" id="email" placeholder="Your email address" autocomplete="email" />
-          <span id="email-check" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);display:none;color:#4AAFFF;font-size:16px;">✓</span>
-        </div>
-
-        <button class="btn" id="submit-btn" type="button">
-          <span id="btn-label">Send Me the Free Guide</span>
-          <span class="btn-arr" id="btn-arr">→</span>
-        </button>
-
-        <p class="lock-note">
-          <svg viewBox="0 0 11 11" fill="none" width="11" height="11"><rect x="1" y="4.5" width="9" height="6" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M3.5 4.5V3.5a2 2 0 0 1 4 0v1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-          100% free · No spam · Unsubscribe anytime
+        <p class="hero-sub">
+          Get the free framework built on the <strong style="color:var(--yellow)">6 Pillars of Football</strong>
+          that top players use to eliminate fear and perform at their best.
         </p>
+
+        <div class="proof">
+          <div class="av-stack">
+            <div class="av"><svg viewBox="0 0 30 30"><rect width="30" height="30" fill="#1B2A6B"/><text x="15" y="20" text-anchor="middle" font-size="12" fill="#fff" font-weight="700">M</text></svg></div>
+            <div class="av"><svg viewBox="0 0 30 30"><rect width="30" height="30" fill="#1E5A9C"/><text x="15" y="20" text-anchor="middle" font-size="12" fill="#fff" font-weight="700">J</text></svg></div>
+            <div class="av"><svg viewBox="0 0 30 30"><rect width="30" height="30" fill="#7C3AED"/><text x="15" y="20" text-anchor="middle" font-size="12" fill="#fff" font-weight="700">A</text></svg></div>
+            <div class="av"><svg viewBox="0 0 30 30"><rect width="30" height="30" fill="#065F46"/><text x="15" y="20" text-anchor="middle" font-size="12" fill="#fff" font-weight="700">R</text></svg></div>
+            <div class="av"><svg viewBox="0 0 30 30"><rect width="30" height="30" fill="#92400E"/><text x="15" y="20" text-anchor="middle" font-size="12" fill="#fff" font-weight="700">K</text></svg></div>
+          </div>
+          <span class="stars">★★★★★</span>
+          <span class="proof-text"><b>500+ players</b> already inside</span>
+        </div>
       </div>
 
-      <!-- Success -->
-      <div id="success">
-        <div class="success-ring">🏆</div>
-        <h2>Welcome to the <span>Journey!</span></h2>
-        <p>You're now part of a community of 500+ players who chose to grow. Your free guide is one click away.</p>
-        <p class="success-sub">⚡ Rehan built this specifically for players like you.</p>
-        <a class="success-btn" href="https://mysoccerjourney.net/eliminatefear/6pillars/socialfunnel" target="_blank" rel="noopener">
-          Access My Free Guide →
-        </a>
+      <!-- Book mockup -->
+      <div class="hero-right">
+        <div class="book-wrap">
+          <div class="book">
+            <svg viewBox="0 0 240 320" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 20px 40px rgba(0,0,0,0.7)) drop-shadow(0 0 30px rgba(245,197,24,0.15))">
+              <!-- Book body -->
+              <rect x="8" y="0" width="224" height="320" rx="6" fill="#0D1631"/>
+              <!-- Spine -->
+              <rect x="8" y="0" width="18" height="320" rx="4" fill="#0A1128"/>
+              <!-- Top yellow stripe -->
+              <rect x="8" y="0" width="224" height="6" rx="3" fill="#F5C518"/>
+              <!-- Bottom yellow stripe -->
+              <rect x="8" y="314" width="224" height="6" rx="3" fill="#F5C518"/>
+              <!-- Emblem circle background -->
+              <circle cx="124" cy="88" r="46" fill="#F5C518" opacity="0.12"/>
+              <circle cx="124" cy="88" r="38" fill="#F5C518"/>
+              <!-- Emblem sun -->
+              <circle cx="124" cy="70" r="8" fill="#E8501A"/>
+              <!-- Emblem mountains -->
+              <polygon points="100,112 118,82 136,112" fill="#0D1631" opacity="0.75"/>
+              <polygon points="115,112 128,88 141,112" fill="#0D1631" opacity="0.5"/>
+              <!-- Emblem player -->
+              <circle cx="124" cy="80" r="4" fill="#060810"/>
+              <rect x="121" y="84" width="6" height="10" rx="2" fill="#060810"/>
+              <!-- Book title -->
+              <text x="124" y="152" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-weight="900" font-size="18" fill="#F5C518" letter-spacing="0.5">THE 6 PILLARS</text>
+              <text x="124" y="170" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-weight="700" font-size="13" fill="#FFFFFF" letter-spacing="0.5">OF FOOTBALL</text>
+              <!-- Divider -->
+              <line x1="50" y1="180" x2="198" y2="180" stroke="rgba(245,197,24,0.3)" stroke-width="1"/>
+              <!-- 6 icons grid -->
+              <!-- Row 1 -->
+              <circle cx="78"  cy="208" r="16" fill="rgba(245,197,24,0.1)" stroke="rgba(245,197,24,0.35)" stroke-width="1"/>
+              <circle cx="124" cy="208" r="16" fill="rgba(245,197,24,0.1)" stroke="rgba(245,197,24,0.35)" stroke-width="1"/>
+              <circle cx="170" cy="208" r="16" fill="rgba(245,197,24,0.1)" stroke="rgba(245,197,24,0.35)" stroke-width="1"/>
+              <!-- brain icon -->
+              <path d="M72 205 q0-5 6-5 q6 0 6 5 q0 5-6 5 q-6 0-6-5z" fill="none" stroke="#F5C518" stroke-width="1.4"/>
+              <!-- shield -->
+              <path d="M118 202 l6 0 l6 0 l0 7 q-3 4-6 5 q-3-1-6-5 z" fill="none" stroke="#F5C518" stroke-width="1.4"/>
+              <!-- target -->
+              <circle cx="170" cy="208" r="5" fill="none" stroke="#F5C518" stroke-width="1.4"/>
+              <circle cx="170" cy="208" r="2" fill="#F5C518"/>
+              <!-- labels row 1 -->
+              <text x="78"  y="231" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="7" fill="#9BAAB8" font-weight="700" letter-spacing="0.3">MINDSET</text>
+              <text x="124" y="231" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="7" fill="#9BAAB8" font-weight="700" letter-spacing="0.3">CONFIDENCE</text>
+              <text x="170" y="231" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="7" fill="#9BAAB8" font-weight="700" letter-spacing="0.3">FOCUS</text>
+              <!-- Row 2 -->
+              <circle cx="78"  cy="258" r="16" fill="rgba(245,197,24,0.1)" stroke="rgba(245,197,24,0.35)" stroke-width="1"/>
+              <circle cx="124" cy="258" r="16" fill="rgba(245,197,24,0.1)" stroke="rgba(245,197,24,0.35)" stroke-width="1"/>
+              <circle cx="170" cy="258" r="16" fill="rgba(245,197,24,0.1)" stroke="rgba(245,197,24,0.35)" stroke-width="1"/>
+              <!-- calendar -->
+              <rect x="71" y="252" width="14" height="12" rx="1.5" fill="none" stroke="#F5C518" stroke-width="1.4"/>
+              <line x1="71" y1="256" x2="85" y2="256" stroke="#F5C518" stroke-width="1.4"/>
+              <!-- arm/strength -->
+              <path d="M118 262 q3-8 12-4" fill="none" stroke="#F5C518" stroke-width="1.6" stroke-linecap="round"/>
+              <!-- lightning/game IQ -->
+              <path d="M167 252 l-3 7 l4 0 l-3 7" fill="none" stroke="#F5C518" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- labels row 2 -->
+              <text x="78"  y="281" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="7" fill="#9BAAB8" font-weight="700" letter-spacing="0.3">DISCIPLINE</text>
+              <text x="124" y="281" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="7" fill="#9BAAB8" font-weight="700" letter-spacing="0.3">RESILIENCE</text>
+              <text x="170" y="281" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="7" fill="#9BAAB8" font-weight="700" letter-spacing="0.3">GAME IQ</text>
+              <!-- Footer text -->
+              <text x="124" y="310" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="7.5" fill="rgba(155,170,184,0.6)" font-weight="600" letter-spacing="1">A FRAMEWORK FOR ELITE PERFORMERS</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ QUOTE STRIP ══ -->
+    <div class="quote-strip">
+      <div class="quote-left">
+        <div class="quote-mark">"</div>
+        <p class="quote-text">This changed the way I think under pressure. I went from dreading big moments to actually wanting the ball.</p>
+        <p class="quote-attr">— Academy Player, 17</p>
+      </div>
+      <!-- Player silhouette SVG -->
+      <svg class="quote-player" viewBox="0 0 90 160" xmlns="http://www.w3.org/2000/svg" opacity="0.7">
+        <circle cx="45" cy="22" r="16" fill="#1B2A6B"/>
+        <rect x="32" y="38" width="26" height="46" rx="8" fill="#1B2A6B"/>
+        <line x1="32" y1="56" x2="14" y2="72" stroke="#1B2A6B" stroke-width="10" stroke-linecap="round"/>
+        <line x1="58" y1="56" x2="76" y2="72" stroke="#1B2A6B" stroke-width="10" stroke-linecap="round"/>
+        <line x1="38" y1="84" x2="32" y2="124" stroke="#1B2A6B" stroke-width="10" stroke-linecap="round"/>
+        <line x1="52" y1="84" x2="58" y2="124" stroke="#1B2A6B" stroke-width="10" stroke-linecap="round"/>
+        <ellipse cx="30" cy="128" rx="8" ry="5" fill="#F5C518" opacity="0.6"/>
+        <ellipse cx="60" cy="128" rx="8" ry="5" fill="#F5C518" opacity="0.6"/>
+      </svg>
+    </div>
+
+    <!-- ══ FEATURES ══ -->
+    <div class="features">
+      <div class="feat">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+          </svg>
+        </div>
+        <div class="feat-title">Built by a Player</div>
+        <div class="feat-desc">Created by Rehan Rayani, former player, coach &amp; performance mentor.</div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+        </div>
+        <div class="feat-title">Practical &amp; Proven</div>
+        <div class="feat-desc">Simple, actionable strategies you can use on and off the field — starting today.</div>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+        </div>
+        <div class="feat-title">Free for a Limited Time</div>
+        <div class="feat-desc">Join 500+ players getting the guide and start leveling up today.</div>
       </div>
     </div>
 
-    <!-- Testimonials -->
-    <div class="testi-wrap">
-      <div class="sec-label">
-        <div class="sec-line"></div>
-        <span>What players are saying</span>
-        <div class="sec-line"></div>
+    <!-- ══ CTA ══ -->
+    <div class="cta-section">
+      <button class="cta-btn" onclick="document.getElementById('modal').classList.add('open')">
+        <span class="cta-icon">
+          <svg viewBox="0 0 20 20" width="18" height="18" fill="none"><circle cx="10" cy="7" r="3.5" fill="#0A0E1A"/><path d="M3 18c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="#0A0E1A" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </span>
+        GET MY FREE GUIDE NOW
+        <span>→</span>
+      </button>
+      <div class="cta-note">
+        <span>100% Free</span>
+        <span>No Spam</span>
+        <span>Unsubscribe Anytime</span>
       </div>
-      <div class="testi-list">
+    </div>
 
-        <div class="testi big">
-          <div class="t-top"><div class="t-stars">★★★★★</div><div class="t-quote">"</div></div>
-          <p class="t-body">I used to freeze every time the ball came to me in a big moment. Eight years of playing and I still felt like a fraud. After going through the 6 Pillars, something just <b>clicked</b>. Last weekend I scored the winning goal in our regional final — and for the first time I actually <b>enjoyed the pressure</b>. This isn't just a guide. It changed how I think about the game entirely.</p>
-          <div class="t-foot">
-            <div class="t-av"><svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#1B2A6B"/><text x="16" y="21" text-anchor="middle" font-size="13" fill="#fff" font-family="Inter,sans-serif" font-weight="700">M</text></svg></div>
-            <div><div class="t-name">Marcus T.</div><div class="t-role">Midfielder · U19 Academy</div></div>
-            <div class="t-ver"><svg viewBox="0 0 11 11" fill="none"><circle cx="5.5" cy="5.5" r="4.5" fill="rgba(74,175,255,0.12)" stroke="#4AAFFF" stroke-width="1"/><polyline points="3,5.5 4.8,7.2 8,3.5" stroke="#4AAFFF" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Verified</div>
-          </div>
+    <!-- ══ TESTIMONIALS ══ -->
+    <div class="sec-label">
+      <div class="sec-line"></div>
+      <span>What players are saying</span>
+      <div class="sec-line"></div>
+    </div>
+
+    <div class="testi-grid">
+      <div class="testi big">
+        <div class="t-top"><div class="t-stars">★★★★★</div><div class="t-quote">"</div></div>
+        <p class="t-body">I used to freeze every time the ball came to me in a big moment. Eight years of playing and I still felt like a fraud. After going through the 6 Pillars, something just <b>clicked</b>. Last weekend I scored the winning goal in our regional final — and for the first time I actually <b>enjoyed the pressure</b>. This isn't just a guide. It changed how I think about the game entirely.</p>
+        <div class="t-foot">
+          <div class="t-av"><svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#1B2A6B"/><text x="16" y="21" text-anchor="middle" font-size="13" fill="#fff" font-weight="700">M</text></svg></div>
+          <div><div class="t-name">Marcus T.</div><div class="t-role">Midfielder · U19 Academy</div></div>
+          <div class="t-ver"><svg viewBox="0 0 11 11" fill="none"><circle cx="5.5" cy="5.5" r="4.5" fill="rgba(74,175,255,0.12)" stroke="#4AAFFF" stroke-width="1"/><polyline points="3,5.5 4.8,7.2 8,3.5" stroke="#4AAFFF" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Verified</div>
         </div>
+      </div>
 
-        <div class="testi">
-          <div class="t-top"><div class="t-stars">★★★★★</div><div class="t-quote">"</div></div>
-          <p class="t-body">I was about to quit soccer. My coach kept saying I had the skill but my <b>mental game was holding me back</b>. The 6 Pillars gave me something real to work with before and during games. Three months later I got called up to the first team.</p>
-          <div class="t-foot">
-            <div class="t-av"><svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#1E5A9C"/><text x="16" y="21" text-anchor="middle" font-size="13" fill="#fff" font-family="Inter,sans-serif" font-weight="700">J</text></svg></div>
-            <div><div class="t-name">Jordan K.</div><div class="t-role">Winger · Semi-Pro</div></div>
-            <div class="t-ver"><svg viewBox="0 0 11 11" fill="none"><circle cx="5.5" cy="5.5" r="4.5" fill="rgba(74,175,255,0.12)" stroke="#4AAFFF" stroke-width="1"/><polyline points="3,5.5 4.8,7.2 8,3.5" stroke="#4AAFFF" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Verified</div>
-          </div>
+      <div class="testi">
+        <div class="t-top"><div class="t-stars">★★★★★</div><div class="t-quote">"</div></div>
+        <p class="t-body">Was about to quit. Coach said I had the skill but my <b>mental game was holding me back</b>. Three months after the 6 Pillars I got called up to the first team.</p>
+        <div class="t-foot">
+          <div class="t-av"><svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#1E5A9C"/><text x="16" y="21" text-anchor="middle" font-size="13" fill="#fff" font-weight="700">J</text></svg></div>
+          <div><div class="t-name">Jordan K.</div><div class="t-role">Winger · Semi-Pro</div></div>
+          <div class="t-ver"><svg viewBox="0 0 11 11" fill="none"><circle cx="5.5" cy="5.5" r="4.5" fill="rgba(74,175,255,0.12)" stroke="#4AAFFF" stroke-width="1"/><polyline points="3,5.5 4.8,7.2 8,3.5" stroke="#4AAFFF" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Verified</div>
         </div>
+      </div>
 
-        <div class="testi">
-          <div class="t-top"><div class="t-stars">★★★★★</div><div class="t-quote">"</div></div>
-          <p class="t-body">My daughter is 15 and was getting so anxious before games she'd cry on the way there. We worked through the pillars together and she <b>now walks onto the pitch with a completely different energy</b>. Her coach noticed within two weeks.</p>
-          <div class="t-foot">
-            <div class="t-av"><svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#7C3AED"/><text x="16" y="21" text-anchor="middle" font-size="13" fill="#fff" font-family="Inter,sans-serif" font-weight="700">A</text></svg></div>
-            <div><div class="t-name">Amanda R.</div><div class="t-role">Parent · Youth Player Mom</div></div>
-            <div class="t-ver"><svg viewBox="0 0 11 11" fill="none"><circle cx="5.5" cy="5.5" r="4.5" fill="rgba(74,175,255,0.12)" stroke="#4AAFFF" stroke-width="1"/><polyline points="3,5.5 4.8,7.2 8,3.5" stroke="#4AAFFF" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Verified</div>
-          </div>
+      <div class="testi">
+        <div class="t-top"><div class="t-stars">★★★★★</div><div class="t-quote">"</div></div>
+        <p class="t-body">My daughter cried before every game. After the pillars she <b>walks onto the pitch with a completely different energy</b>. Coach noticed within two weeks.</p>
+        <div class="t-foot">
+          <div class="t-av"><svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#7C3AED"/><text x="16" y="21" text-anchor="middle" font-size="13" fill="#fff" font-weight="700">A</text></svg></div>
+          <div><div class="t-name">Amanda R.</div><div class="t-role">Parent · Youth Player Mom</div></div>
+          <div class="t-ver"><svg viewBox="0 0 11 11" fill="none"><circle cx="5.5" cy="5.5" r="4.5" fill="rgba(74,175,255,0.12)" stroke="#4AAFFF" stroke-width="1"/><polyline points="3,5.5 4.8,7.2 8,3.5" stroke="#4AAFFF" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Verified</div>
         </div>
+      </div>
 
-        <div class="testi">
-          <div class="t-top"><div class="t-stars">★★★★★</div><div class="t-quote">"</div></div>
-          <p class="t-body">I've bought courses, read books, tried it all. This is the <b>only thing that actually worked</b>. It's free, straight to the point, and real. The daily ritual alone changed everything — I do it before every game now.</p>
-          <div class="t-foot">
-            <div class="t-av"><svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#065F46"/><text x="16" y="21" text-anchor="middle" font-size="13" fill="#fff" font-family="Inter,sans-serif" font-weight="700">R</text></svg></div>
-            <div><div class="t-name">Ryan O.</div><div class="t-role">Striker · College Team</div></div>
-            <div class="t-ver"><svg viewBox="0 0 11 11" fill="none"><circle cx="5.5" cy="5.5" r="4.5" fill="rgba(74,175,255,0.12)" stroke="#4AAFFF" stroke-width="1"/><polyline points="3,5.5 4.8,7.2 8,3.5" stroke="#4AAFFF" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Verified</div>
-          </div>
+      <div class="testi">
+        <div class="t-top"><div class="t-stars">★★★★★</div><div class="t-quote">"</div></div>
+        <p class="t-body">Bought every course, read every book. This is the <b>only thing that actually worked</b>. Free, straight to the point. The daily ritual changed everything.</p>
+        <div class="t-foot">
+          <div class="t-av"><svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#065F46"/><text x="16" y="21" text-anchor="middle" font-size="13" fill="#fff" font-weight="700">R</text></svg></div>
+          <div><div class="t-name">Ryan O.</div><div class="t-role">Striker · College Team</div></div>
+          <div class="t-ver"><svg viewBox="0 0 11 11" fill="none"><circle cx="5.5" cy="5.5" r="4.5" fill="rgba(74,175,255,0.12)" stroke="#4AAFFF" stroke-width="1"/><polyline points="3,5.5 4.8,7.2 8,3.5" stroke="#4AAFFF" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Verified</div>
         </div>
+      </div>
 
-        <div class="testi">
-          <div class="t-top"><div class="t-stars">★★★★★</div><div class="t-quote">"</div></div>
-          <p class="t-body">Thought mindset content was just fluff. One video, clicked the link, read it in 20 minutes. <b>Changed how I prepare completely.</b> Calmer, sharper — my stats this season say it all.</p>
-          <div class="t-foot">
-            <div class="t-av"><svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#92400E"/><text x="16" y="21" text-anchor="middle" font-size="13" fill="#fff" font-family="Inter,sans-serif" font-weight="700">K</text></svg></div>
-            <div><div class="t-name">Kai N.</div><div class="t-role">Goalkeeper · Regional League</div></div>
-            <div class="t-ver"><svg viewBox="0 0 11 11" fill="none"><circle cx="5.5" cy="5.5" r="4.5" fill="rgba(74,175,255,0.12)" stroke="#4AAFFF" stroke-width="1"/><polyline points="3,5.5 4.8,7.2 8,3.5" stroke="#4AAFFF" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Verified</div>
-          </div>
+      <div class="testi">
+        <div class="t-top"><div class="t-stars">★★★★★</div><div class="t-quote">"</div></div>
+        <p class="t-body">Thought mindset was just fluff. Read it in 20 minutes. <b>Changed how I prepare completely.</b> Calmer, sharper — my stats this season prove it.</p>
+        <div class="t-foot">
+          <div class="t-av"><svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#92400E"/><text x="16" y="21" text-anchor="middle" font-size="13" fill="#fff" font-weight="700">K</text></svg></div>
+          <div><div class="t-name">Kai N.</div><div class="t-role">Goalkeeper · Regional League</div></div>
+          <div class="t-ver"><svg viewBox="0 0 11 11" fill="none"><circle cx="5.5" cy="5.5" r="4.5" fill="rgba(74,175,255,0.12)" stroke="#4AAFFF" stroke-width="1"/><polyline points="3,5.5 4.8,7.2 8,3.5" stroke="#4AAFFF" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Verified</div>
         </div>
-
       </div>
     </div>
 
@@ -418,164 +843,125 @@
       <span class="fdot"></span>
       <a href="#">Terms</a>
     </footer>
+  </div><!-- /wrap -->
 
+  <!-- ══ MODAL FORM ══ -->
+  <div class="modal-overlay" id="modal" onclick="if(event.target===this)this.classList.remove('open')">
+    <div class="modal">
+      <button class="modal-close" onclick="document.getElementById('modal').classList.remove('open')">✕</button>
+
+      <div id="form-area">
+        <div class="modal-title">Get Your <span>Free Guide</span></div>
+        <p class="modal-sub">Enter your details and I'll send you the 6 Pillars framework right now — completely free.</p>
+
+        <div class="field">
+          <span class="field-icon"><svg viewBox="0 0 15 15" fill="none"><path d="M7.5 8a2.75 2.75 0 1 0 0-5.5A2.75 2.75 0 0 0 7.5 8zm-4.5 5c0-2.485 2.015-4.5 4.5-4.5s4.5 2.015 4.5 4.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
+          <input type="text" id="name" placeholder="Your first name" autocomplete="given-name" />
+        </div>
+        <div class="field">
+          <span class="field-icon"><svg viewBox="0 0 15 15" fill="none"><rect x="1" y="3" width="13" height="9" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M1 5.5l6.5 4 6.5-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
+          <input type="email" id="email" placeholder="Your email address" autocomplete="email" />
+          <span id="email-check" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);display:none;color:#4AAFFF;font-size:16px;font-weight:700;">✓</span>
+        </div>
+
+        <button class="modal-btn" id="submit-btn" type="button">
+          <span id="btn-label">Send Me the Free Guide</span>
+          <span class="btn-arr" id="btn-arr">→</span>
+        </button>
+        <p class="lock-note">
+          <svg viewBox="0 0 11 11" fill="none" width="11" height="11"><rect x="1" y="4.5" width="9" height="6" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M3.5 4.5V3.5a2 2 0 0 1 4 0v1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          100% free · No spam · Unsubscribe anytime
+        </p>
+      </div>
+
+      <div id="success">
+        <div class="success-ring">🏆</div>
+        <h2>Welcome to the <span>Journey!</span></h2>
+        <p>You're now part of 500+ players who chose to grow.</p>
+        <p class="success-note">⚡ Rehan built this specifically for players like you.</p>
+        <a class="success-link" href="https://mysoccerjourney.net/eliminatefear/6pillars/socialfunnel" target="_blank" rel="noopener">
+          Access My Free Guide →
+        </a>
+      </div>
+    </div>
   </div>
 
   <script>
     /* ── Typewriter ── */
-    const words = [
-      "Scared.",
-      "Tense.",
-      "Small.",
-      "Safe.",
-      "Scared to Fail.",
-      "in Your Head.",
-      "With Doubt.",
-      "Holding Back.",
-      "Afraid of the Moment.",
-      "Like a Backup.",
-    ];
-    const el = document.getElementById("hl-typed");
-    let idx = 0;
+    const words = ["Scared.","Tense.","Small.","Safe.","Scared to Fail.","in Your Head.","With Doubt.","Holding Back.","Afraid of the Moment.","Like a Backup."];
+    const el  = document.getElementById("hl-typed");
+    let idx   = 0;
     const sleep = ms => new Promise(r => setTimeout(r, ms));
+    async function typeWord(w){ for(let i=1;i<=w.length;i++){el.textContent=w.slice(0,i);await sleep(52+Math.random()*20-10);} }
+    async function delWord() { const w=el.textContent; for(let i=w.length-1;i>=0;i--){el.textContent=w.slice(0,i);await sleep(30+Math.random()*10-5);} }
+    (async()=>{ while(true){ await typeWord(words[idx%words.length]); await sleep(2500); await delWord(); await sleep(320); idx++; } })();
 
-    async function typeWord(w) {
-      for (let i = 1; i <= w.length; i++) {
-        el.textContent = w.slice(0, i);
-        await sleep(52 + Math.random() * 20 - 10);
-      }
-    }
-    async function delWord() {
-      const w = el.textContent;
-      for (let i = w.length - 1; i >= 0; i--) {
-        el.textContent = w.slice(0, i);
-        await sleep(30 + Math.random() * 10 - 5);
-      }
-    }
-    (async () => {
-      while (true) {
-        await typeWord(words[idx % words.length]);
-        await sleep(2500);
-        await delWord();
-        await sleep(320);
-        idx++;
-      }
-    })();
-
-    /* ── Input live feedback ── */
+    /* ── Email live feedback ── */
     const emailInput = document.getElementById("email");
     const emailCheck = document.getElementById("email-check");
-    const emailWrap  = document.getElementById("email-field-wrap");
-
     emailInput.addEventListener("input", () => {
-      emailWrap.querySelector("input").classList.add("typing");
-      clearTimeout(emailInput._t);
-      emailInput._t = setTimeout(() => {
-        emailWrap.querySelector("input").classList.remove("typing");
-      }, 600);
-
       const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value);
       emailCheck.style.display = valid ? "block" : "none";
-      if (valid) {
-        emailInput.style.borderColor = "rgba(74,175,255,0.5)";
-        emailInput.style.boxShadow   = "0 0 0 3px rgba(74,175,255,0.08)";
-      } else {
-        emailInput.style.borderColor = "";
-        emailInput.style.boxShadow   = "";
-      }
+      emailInput.style.borderColor = valid ? "rgba(74,175,255,0.5)" : "";
+      emailInput.style.boxShadow   = valid ? "0 0 0 3px rgba(74,175,255,0.08)" : "";
     });
 
     /* ── Confetti ── */
     const canvas = document.getElementById("confetti-canvas");
     const ctx    = canvas.getContext("2d");
-    let pieces   = [];
-    let rafId    = null;
-
+    let pieces = [], rafId = null;
     const COLORS = ["#F5C518","#4AAFFF","#FFFFFF","#FFE57A","#1B2A6B","#FF6B35"];
-
-    function resizeCanvas() {
-      canvas.width  = window.innerWidth;
-      canvas.height = window.innerHeight;
+    function resizeCanvas(){ canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
+    window.addEventListener("resize", resizeCanvas); resizeCanvas();
+    function launchConfetti(){
+      pieces=[];
+      for(let i=0;i<160;i++) pieces.push({
+        x:canvas.width*Math.random(), y:-10-Math.random()*200,
+        vx:(Math.random()-0.5)*7, vy:2+Math.random()*5,
+        r:Math.random()*Math.PI*2, rv:(Math.random()-0.5)*0.18,
+        w:6+Math.random()*8, h:3+Math.random()*5,
+        c:COLORS[Math.floor(Math.random()*COLORS.length)],
+        life:1, decay:0.005+Math.random()*0.006,
+      });
+      cancelAnimationFrame(rafId); animateConfetti();
     }
-    window.addEventListener("resize", resizeCanvas);
-    resizeCanvas();
-
-    function launchConfetti() {
-      pieces = [];
-      for (let i = 0; i < 140; i++) {
-        pieces.push({
-          x:  canvas.width * Math.random(),
-          y:  -10 - Math.random() * 200,
-          vx: (Math.random() - 0.5) * 6,
-          vy: 2 + Math.random() * 5,
-          r:  Math.random() * Math.PI * 2,
-          rv: (Math.random() - 0.5) * 0.18,
-          w:  6 + Math.random() * 8,
-          h:  3 + Math.random() * 5,
-          c:  COLORS[Math.floor(Math.random() * COLORS.length)],
-          life: 1,
-          decay: 0.006 + Math.random() * 0.006,
-        });
+    function animateConfetti(){
+      ctx.clearRect(0,0,canvas.width,canvas.height); let alive=false;
+      for(const p of pieces){
+        p.x+=p.vx; p.y+=p.vy; p.r+=p.rv; p.vy+=0.12; p.life-=p.decay;
+        if(p.life<=0) continue; alive=true;
+        ctx.save(); ctx.globalAlpha=p.life; ctx.translate(p.x,p.y); ctx.rotate(p.r);
+        ctx.fillStyle=p.c; ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h); ctx.restore();
       }
-      cancelAnimationFrame(rafId);
-      animateConfetti();
-    }
-
-    function animateConfetti() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      let alive = false;
-      for (const p of pieces) {
-        p.x  += p.vx;
-        p.y  += p.vy;
-        p.r  += p.rv;
-        p.vy += 0.12;
-        p.life -= p.decay;
-        if (p.life <= 0) continue;
-        alive = true;
-        ctx.save();
-        ctx.globalAlpha = p.life;
-        ctx.translate(p.x, p.y);
-        ctx.rotate(p.r);
-        ctx.fillStyle = p.c;
-        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
-        ctx.restore();
-      }
-      if (alive) rafId = requestAnimationFrame(animateConfetti);
-      else ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if(alive) rafId=requestAnimationFrame(animateConfetti);
+      else ctx.clearRect(0,0,canvas.width,canvas.height);
     }
 
     /* ── Submit ── */
     document.getElementById("submit-btn").addEventListener("click", async () => {
       const name  = document.getElementById("name").value.trim();
       const email = emailInput.value.trim();
-      if (!name || !email) {
-        if (!name)  { document.getElementById("name").style.borderColor  = "rgba(255,100,80,0.6)"; }
-        if (!email) { emailInput.style.borderColor = "rgba(255,100,80,0.6)"; }
-        return;
-      }
-      const btn = document.getElementById("submit-btn");
-      btn.disabled = true;
-      document.getElementById("btn-label").textContent = "Sending…";
-      document.getElementById("btn-arr").textContent   = "";
+      if(!name) document.getElementById("name").style.borderColor="rgba(255,100,80,0.6)";
+      if(!email) emailInput.style.borderColor="rgba(255,100,80,0.6)";
+      if(!name||!email) return;
 
-      // Replace YOUR_FORM_ID — sign up free at formspree.io
+      const btn = document.getElementById("submit-btn");
+      btn.disabled=true;
+      document.getElementById("btn-label").textContent="Sending…";
+      document.getElementById("btn-arr").textContent="";
+
+      // Replace YOUR_FORM_ID — free at formspree.io
       const URL = "https://formspree.io/f/YOUR_FORM_ID";
       try {
-        const r = await fetch(URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json", Accept: "application/json" },
-          body: JSON.stringify({ name, email, _subject: "New MSJ Lead 🎉" }),
-        });
-        if (r.ok || URL.includes("YOUR_FORM_ID")) showSuccess();
-        else throw 0;
+        const r = await fetch(URL,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify({name,email,_subject:"New MSJ Lead 🎉"})});
+        if(r.ok||URL.includes("YOUR_FORM_ID")) showSuccess(); else throw 0;
       } catch { showSuccess(); }
     });
 
-    function showSuccess() {
-      document.getElementById("form-area").style.display = "none";
-      document.getElementById("success").style.display   = "block";
+    function showSuccess(){
+      document.getElementById("form-area").style.display="none";
+      document.getElementById("success").style.display="block";
       launchConfetti();
-      // fire again after 1s for double burst
       setTimeout(launchConfetti, 900);
     }
   </script>
