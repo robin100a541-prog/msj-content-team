@@ -4,21 +4,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Soccer Journey — Unlock Your Free Guide</title>
-  <meta name="description" content="Get the free guide that shows you how to eliminate fear and play with full confidence on the field." />
+  <meta name="description" content="The free framework that eliminates fear and unlocks your best soccer." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --green: #00C46A;
-      --green-dark: #009F56;
-      --bg: #0A0E17;
+      --g: #00D46E;
+      --g2: #00A855;
+      --bg: #060910;
+      --surface: #0D1220;
       --card: #111827;
-      --text: #F1F5F9;
-      --muted: #94A3B8;
-      --border: rgba(255,255,255,0.08);
+      --border: rgba(255,255,255,0.07);
+      --text: #F0F4FF;
+      --muted: #8896AB;
+      --dim: #3D4D63;
     }
+
+    html { scroll-behavior: smooth; }
 
     body {
       font-family: 'Inter', sans-serif;
@@ -29,23 +33,66 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 24px 16px;
+      padding: 40px 20px 60px;
+      overflow-x: hidden;
     }
 
-    /* subtle radial glow behind everything */
-    body::before {
-      content: '';
+    /* ── Background effects ── */
+    .bg-glow {
       position: fixed;
       inset: 0;
-      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,196,106,0.12) 0%, transparent 70%);
       pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% -10%, rgba(0,212,110,0.13) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 40% at 80% 80%, rgba(0,80,200,0.07) 0%, transparent 60%);
+    }
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
     }
 
+    /* ── Layout ── */
     .wrap {
       position: relative;
+      z-index: 1;
       width: 100%;
-      max-width: 520px;
+      max-width: 560px;
       text-align: center;
+    }
+
+    /* ── Logo / Brand ── */
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 40px;
+      opacity: 0.9;
+    }
+    .brand-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--g), var(--g2));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 0 20px rgba(0,212,110,0.3);
+    }
+    .brand-name {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      text-transform: uppercase;
     }
 
     /* ── Badge ── */
@@ -53,73 +100,130 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(0,196,106,0.12);
-      border: 1px solid rgba(0,196,106,0.3);
-      color: var(--green);
-      font-size: 12px;
+      background: rgba(0,212,110,0.08);
+      border: 1px solid rgba(0,212,110,0.2);
+      color: var(--g);
+      font-size: 11px;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      padding: 6px 14px;
+      padding: 5px 14px;
       border-radius: 100px;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
     }
-    .badge span { font-size: 14px; }
+    .badge-dot {
+      width: 6px; height: 6px;
+      background: var(--g);
+      border-radius: 50%;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
 
     /* ── Headline ── */
-    h1 {
-      font-size: clamp(28px, 6vw, 42px);
+    .headline-wrap {
+      margin-bottom: 8px;
+      min-height: 130px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .headline-static {
+      font-size: clamp(13px, 3vw, 16px);
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+      margin-bottom: 10px;
+    }
+
+    .headline-typed {
+      font-size: clamp(30px, 7vw, 46px);
       font-weight: 900;
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-      margin-bottom: 16px;
+      line-height: 1.12;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      min-height: 1.2em;
+      display: block;
     }
-    h1 em {
-      font-style: normal;
-      color: var(--green);
+    .headline-typed .line1 { display: block; }
+    .headline-typed .line2 {
+      display: block;
+      color: var(--g);
+      background: linear-gradient(90deg, var(--g), #00FFB2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
+
+    /* Cursor */
+    .cursor {
+      display: inline-block;
+      width: 3px;
+      height: 0.85em;
+      background: var(--g);
+      border-radius: 2px;
+      margin-left: 3px;
+      vertical-align: middle;
+      animation: blink 0.7s step-end infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
     /* ── Sub ── */
     .sub {
       font-size: 16px;
       color: var(--muted);
-      line-height: 1.6;
+      line-height: 1.65;
       max-width: 420px;
-      margin: 0 auto 32px;
+      margin: 20px auto 36px;
     }
 
-    /* ── Social proof ── */
+    /* ── Social proof strip ── */
     .proof {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      margin-bottom: 32px;
+      gap: 12px;
+      margin-bottom: 36px;
     }
-    .avatars {
-      display: flex;
-    }
-    .avatars img {
-      width: 32px;
-      height: 32px;
+    .avatars { display: flex; }
+    .avatar {
+      width: 30px; height: 30px;
       border-radius: 50%;
       border: 2px solid var(--bg);
       margin-left: -8px;
-      object-fit: cover;
+      overflow: hidden;
     }
-    .avatars img:first-child { margin-left: 0; }
-    .proof-text {
-      font-size: 13px;
-      color: var(--muted);
+    .avatars .avatar:first-child { margin-left: 0; }
+    .proof-stars { color: #FACC15; font-size: 12px; letter-spacing: 1px; }
+    .proof-text { font-size: 13px; color: var(--muted); }
+    .proof-text strong { color: var(--text); font-weight: 600; }
+    .proof-divider {
+      width: 1px; height: 24px;
+      background: var(--border);
     }
-    .proof-text strong { color: var(--text); }
 
     /* ── Card ── */
     .card {
-      background: var(--card);
+      background: linear-gradient(160deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
       border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 32px 28px;
+      border-radius: 24px;
+      padding: 36px 32px;
+      backdrop-filter: blur(12px);
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0,212,110,0.4), transparent);
     }
 
     /* ── Bullets ── */
@@ -129,223 +233,439 @@
       margin-bottom: 28px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
     }
     .bullets li {
       display: flex;
       align-items: flex-start;
-      gap: 10px;
+      gap: 12px;
       font-size: 14px;
       color: var(--muted);
-      line-height: 1.5;
+      line-height: 1.55;
     }
-    .bullets li::before {
-      content: '✓';
+    .bullet-icon {
       flex-shrink: 0;
-      width: 20px;
-      height: 20px;
-      background: rgba(0,196,106,0.15);
-      color: var(--green);
+      margin-top: 1px;
+      width: 18px; height: 18px;
+      background: rgba(0,212,110,0.12);
+      border: 1px solid rgba(0,212,110,0.25);
       border-radius: 50%;
-      font-size: 11px;
-      font-weight: 900;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-top: 1px;
+    }
+    .bullet-icon svg { width: 9px; height: 9px; }
+
+    /* ── Divider ── */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 24px 0;
+    }
+
+    /* ── Form label ── */
+    .form-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      text-align: left;
+      margin-bottom: 14px;
+      display: block;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
     }
 
     /* ── Form ── */
     .form-group {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
+
+    .input-wrap {
+      position: relative;
+    }
+    .input-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--dim);
+      pointer-events: none;
+      display: flex;
+    }
+    .input-icon svg { width: 16px; height: 16px; }
 
     input[type="email"],
     input[type="text"] {
       width: 100%;
-      padding: 14px 16px;
-      background: rgba(255,255,255,0.05);
+      padding: 14px 16px 14px 42px;
+      background: rgba(255,255,255,0.04);
       border: 1px solid var(--border);
-      border-radius: 10px;
+      border-radius: 12px;
       color: var(--text);
       font-size: 15px;
       font-family: inherit;
       outline: none;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
     }
-    input::placeholder { color: #4B5563; }
-    input:focus { border-color: rgba(0,196,106,0.5); }
+    input::placeholder { color: var(--dim); }
+    input:focus {
+      border-color: rgba(0,212,110,0.45);
+      background: rgba(0,212,110,0.04);
+      box-shadow: 0 0 0 3px rgba(0,212,110,0.08);
+    }
 
     button[type="submit"] {
       width: 100%;
       padding: 16px;
-      background: var(--green);
+      background: linear-gradient(135deg, var(--g) 0%, #00B860 100%);
       color: #fff;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 800;
       font-family: inherit;
       border: none;
-      border-radius: 10px;
+      border-radius: 12px;
       cursor: pointer;
       letter-spacing: -0.01em;
-      transition: background 0.2s, transform 0.1s;
+      transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 24px rgba(0,212,110,0.3);
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
-    button[type="submit"]:hover { background: var(--green-dark); }
-    button[type="submit"]:active { transform: scale(0.98); }
+    button[type="submit"]:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 32px rgba(0,212,110,0.4);
+    }
+    button[type="submit"]:active { transform: scale(0.98) translateY(0); }
+    button[type="submit"]:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    .btn-arrow {
+      transition: transform 0.2s;
+    }
+    button[type="submit"]:hover .btn-arrow { transform: translateX(3px); }
 
     .disclaimer {
-      margin-top: 12px;
+      margin-top: 14px;
       font-size: 12px;
-      color: #4B5563;
+      color: var(--dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
     }
-    .disclaimer a { color: #6B7280; }
+    .disclaimer svg { color: var(--dim); flex-shrink: 0; }
 
-    /* ── Success state ── */
+    /* ── Success ── */
     #success {
       display: none;
       text-align: center;
-      padding: 8px 0;
+      padding: 12px 0;
     }
-    #success .check {
-      font-size: 48px;
-      line-height: 1;
-      margin-bottom: 16px;
+    .success-icon {
+      width: 64px; height: 64px;
+      background: rgba(0,212,110,0.1);
+      border: 2px solid rgba(0,212,110,0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 28px;
     }
     #success h2 {
-      font-size: 22px;
-      font-weight: 800;
+      font-size: 24px;
+      font-weight: 900;
       margin-bottom: 8px;
+      letter-spacing: -0.02em;
     }
     #success p {
       color: var(--muted);
       font-size: 14px;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
+      line-height: 1.6;
     }
     #success a.cta-link {
-      display: inline-block;
-      padding: 14px 28px;
-      background: var(--green);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 32px;
+      background: linear-gradient(135deg, var(--g), #00B860);
       color: #fff;
       font-weight: 800;
       font-size: 15px;
-      border-radius: 10px;
+      border-radius: 12px;
       text-decoration: none;
-      transition: background 0.2s;
+      transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 24px rgba(0,212,110,0.35);
     }
-    #success a.cta-link:hover { background: var(--green-dark); }
+    #success a.cta-link:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 32px rgba(0,212,110,0.45);
+    }
 
     /* ── Footer ── */
     footer {
-      margin-top: 28px;
+      margin-top: 32px;
       font-size: 12px;
-      color: #374151;
+      color: var(--dim);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
     }
+    footer a { color: var(--dim); text-decoration: none; }
+    footer a:hover { color: var(--muted); }
+    footer .sep { width: 3px; height: 3px; border-radius: 50%; background: var(--dim); }
 
-    @media (max-width: 400px) {
-      .card { padding: 24px 18px; }
+    @media (max-width: 420px) {
+      .card { padding: 28px 20px; }
+      .headline-wrap { min-height: 110px; }
     }
   </style>
 </head>
 <body>
+  <div class="bg-glow"></div>
+  <div class="bg-grid"></div>
+
   <div class="wrap">
 
-    <div class="badge"><span>⚽</span> Free Guide — My Soccer Journey</div>
+    <!-- Brand -->
+    <div class="brand">
+      <div class="brand-icon">⚽</div>
+      <span class="brand-name">My Soccer Journey</span>
+    </div>
 
-    <h1>Stop Playing Scared.<br><em>Start Playing Free.</em></h1>
+    <!-- Badge -->
+    <div class="badge">
+      <div class="badge-dot"></div>
+      Free Guide — Limited Access
+    </div>
+
+    <!-- Animated headline -->
+    <div class="headline-wrap">
+      <span class="headline-static">You were built for this.</span>
+      <span class="headline-typed" id="typed-text" aria-live="polite"></span>
+    </div>
 
     <p class="sub">
-      Enter your email and I'll send you the exact framework I use to eliminate fear and perform at your best — every single game.
+      Drop your email and get the free framework that top players use to shut off fear and show up fully — every single game.
     </p>
 
     <!-- Social proof -->
     <div class="proof">
-      <!-- placeholder avatars using a color-block approach (no external img needed) -->
       <div class="avatars" aria-hidden="true">
-        <svg width="32" height="32" viewBox="0 0 32 32" style="border-radius:50%;border:2px solid #0A0E17"><rect width="32" height="32" fill="#1E40AF"/><text x="16" y="21" text-anchor="middle" font-size="14" fill="#fff" font-family="Inter,sans-serif">M</text></svg>
-        <svg width="32" height="32" viewBox="0 0 32 32" style="border-radius:50%;border:2px solid #0A0E17;margin-left:-8px"><rect width="32" height="32" fill="#7C3AED"/><text x="16" y="21" text-anchor="middle" font-size="14" fill="#fff" font-family="Inter,sans-serif">J</text></svg>
-        <svg width="32" height="32" viewBox="0 0 32 32" style="border-radius:50%;border:2px solid #0A0E17;margin-left:-8px"><rect width="32" height="32" fill="#BE123C"/><text x="16" y="21" text-anchor="middle" font-size="14" fill="#fff" font-family="Inter,sans-serif">A</text></svg>
-        <svg width="32" height="32" viewBox="0 0 32 32" style="border-radius:50%;border:2px solid #0A0E17;margin-left:-8px"><rect width="32" height="32" fill="#065F46"/><text x="16" y="21" text-anchor="middle" font-size="14" fill="#fff" font-family="Inter,sans-serif">R</text></svg>
+        <div class="avatar"><svg viewBox="0 0 30 30"><rect width="30" height="30" fill="#1E40AF"/><text x="15" y="20" text-anchor="middle" font-size="13" fill="#fff" font-family="Inter,sans-serif" font-weight="700">M</text></svg></div>
+        <div class="avatar"><svg viewBox="0 0 30 30"><rect width="30" height="30" fill="#7C3AED"/><text x="15" y="20" text-anchor="middle" font-size="13" fill="#fff" font-family="Inter,sans-serif" font-weight="700">J</text></svg></div>
+        <div class="avatar"><svg viewBox="0 0 30 30"><rect width="30" height="30" fill="#BE123C"/><text x="15" y="20" text-anchor="middle" font-size="13" fill="#fff" font-family="Inter,sans-serif" font-weight="700">A</text></svg></div>
+        <div class="avatar"><svg viewBox="0 0 30 30"><rect width="30" height="30" fill="#065F46"/><text x="15" y="20" text-anchor="middle" font-size="13" fill="#fff" font-family="Inter,sans-serif" font-weight="700">R</text></svg></div>
+        <div class="avatar"><svg viewBox="0 0 30 30"><rect width="30" height="30" fill="#92400E"/><text x="15" y="20" text-anchor="middle" font-size="13" fill="#fff" font-family="Inter,sans-serif" font-weight="700">K</text></svg></div>
       </div>
-      <p class="proof-text"><strong>Hundreds of players</strong> already unlocked this</p>
+      <div class="proof-stars">★★★★★</div>
+      <div class="proof-divider"></div>
+      <p class="proof-text"><strong>500+ players</strong> already inside</p>
     </div>
 
     <!-- Card -->
     <div class="card">
       <div id="form-area">
+
         <ul class="bullets">
-          <li>The 6 pillars that rewire how you think under pressure</li>
-          <li>Why fear is costing you games — and how to shut it off</li>
-          <li>A simple daily ritual top players use to stay locked in</li>
+          <li>
+            <div class="bullet-icon">
+              <svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2" stroke="#00D46E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            The 6 Pillars that permanently rewire how you think under pressure
+          </li>
+          <li>
+            <div class="bullet-icon">
+              <svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2" stroke="#00D46E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            Why fear is quietly costing you games — and exactly how to switch it off
+          </li>
+          <li>
+            <div class="bullet-icon">
+              <svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2" stroke="#00D46E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            The daily 5-minute ritual elite players use to stay mentally locked in
+          </li>
+          <li>
+            <div class="bullet-icon">
+              <svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2" stroke="#00D46E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            How to perform at your best even when stakes are highest
+          </li>
         </ul>
 
+        <div class="divider"></div>
+
+        <span class="form-label">Get instant access →</span>
+
         <form class="form-group" id="lead-form" novalidate>
-          <input type="text" name="name" id="name" placeholder="Your first name" required autocomplete="given-name" />
-          <input type="email" name="email" id="email" placeholder="Your best email address" required autocomplete="email" />
+          <div class="input-wrap">
+            <span class="input-icon">
+              <svg viewBox="0 0 16 16" fill="none"><path d="M8 8.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 5c0-2.761 2.239-5 5-5s5 2.239 5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            </span>
+            <input type="text" name="name" id="name" placeholder="Your first name" required autocomplete="given-name" />
+          </div>
+          <div class="input-wrap">
+            <span class="input-icon">
+              <svg viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M1 6l7 4.5L15 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            </span>
+            <input type="email" name="email" id="email" placeholder="Your best email address" required autocomplete="email" />
+          </div>
           <button type="submit" id="submit-btn">
-            Send Me the Free Guide →
+            <span id="btn-text">Send Me the Free Guide</span>
+            <span class="btn-arrow" id="btn-arrow">→</span>
           </button>
-          <p class="disclaimer">100% free. No spam, ever. Unsubscribe anytime.</p>
+          <p class="disclaimer">
+            <svg viewBox="0 0 14 14" fill="none" width="12" height="12"><rect x="1" y="5" width="12" height="8" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M4 5V4a3 3 0 0 1 6 0v1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+            100% free. No spam. Unsubscribe anytime.
+          </p>
         </form>
       </div>
 
-      <!-- Success message (shown after submit) -->
+      <!-- Success -->
       <div id="success">
-        <div class="check">🎉</div>
+        <div class="success-icon">🎉</div>
         <h2>You're in!</h2>
-        <p>Click below to access your free guide right now.</p>
+        <p>Your guide is ready. Click below to access it right now and start your journey.</p>
         <a class="cta-link" href="https://mysoccerjourney.net/eliminatefear/6pillars/socialfunnel" target="_blank" rel="noopener">
-          Access the Free Guide →
+          Access Your Free Guide
+          <span>→</span>
         </a>
       </div>
     </div>
 
-    <footer>© My Soccer Journey. All rights reserved.</footer>
+    <footer>
+      <span>© 2025 My Soccer Journey</span>
+      <span class="sep"></span>
+      <a href="#">Privacy</a>
+      <span class="sep"></span>
+      <a href="#">Terms</a>
+    </footer>
   </div>
 
   <script>
-    const form = document.getElementById('lead-form');
-    const formArea = document.getElementById('form-area');
-    const success = document.getElementById('success');
-    const submitBtn = document.getElementById('submit-btn');
+    /* ── Typewriter ── */
+    const phrases = [
+      ["Stop Playing Scared.", "Start Playing Free."],
+      ["Stop Holding Back.", "Play With Full Confidence."],
+      ["Stop Living in Your Head.", "Start Owning the Field."],
+      ["Stop Doubting Yourself.", "Start Trusting Your Game."],
+      ["Stop Playing Small.", "Step Into Your Potential."],
+      ["Stop Letting Fear Win.", "Play the Way You Know You Can."],
+      ["Stop Overthinking.", "Start Performing."],
+      ["Stop Surviving Games.", "Start Dominating Them."],
+      ["Stop Waiting for Permission.", "Go Take What's Yours."],
+      ["Stop Playing Tense.", "Start Playing Free."],
+    ];
+
+    const el = document.getElementById('typed-text');
+
+    // Build two spans + cursor
+    const span1 = document.createElement('span');
+    span1.className = 'line1';
+    const span2 = document.createElement('span');
+    span2.className = 'line2';
+    const cursor = document.createElement('span');
+    cursor.className = 'cursor';
+
+    el.appendChild(span1);
+    el.appendChild(span2);
+    el.appendChild(cursor);
+
+    let phraseIndex = 0;
+
+    const TYPE_SPEED   = 48;   // ms per character typed
+    const DELETE_SPEED = 28;   // ms per character deleted
+    const PAUSE_AFTER  = 2600; // ms to display before deleting
+    const PAUSE_START  = 300;  // ms pause before typing next phrase
+
+    function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+    async function type(spanEl, text) {
+      for (let i = 0; i <= text.length; i++) {
+        spanEl.textContent = text.slice(0, i);
+        await sleep(TYPE_SPEED + (Math.random() * 20 - 10));
+      }
+    }
+
+    async function erase(spanEl) {
+      const text = spanEl.textContent;
+      for (let i = text.length; i >= 0; i--) {
+        spanEl.textContent = text.slice(0, i);
+        await sleep(DELETE_SPEED + (Math.random() * 10 - 5));
+      }
+    }
+
+    async function run() {
+      while (true) {
+        const [line1, line2] = phrases[phraseIndex % phrases.length];
+        phraseIndex++;
+
+        // Type line 1
+        await type(span1, line1);
+        await sleep(120);
+        // Type line 2
+        await type(span2, line2);
+
+        await sleep(PAUSE_AFTER);
+
+        // Erase line 2 first
+        await erase(span2);
+        await sleep(80);
+        // Erase line 1
+        await erase(span1);
+
+        await sleep(PAUSE_START);
+      }
+    }
+
+    run();
+
+    /* ── Form submit ── */
+    const form       = document.getElementById('lead-form');
+    const formArea   = document.getElementById('form-area');
+    const success    = document.getElementById('success');
+    const submitBtn  = document.getElementById('submit-btn');
+    const btnText    = document.getElementById('btn-text');
+    const btnArrow   = document.getElementById('btn-arrow');
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-
-      const name = document.getElementById('name').value.trim();
+      const name  = document.getElementById('name').value.trim();
       const email = document.getElementById('email').value.trim();
-
       if (!name || !email) return;
 
       submitBtn.disabled = true;
-      submitBtn.textContent = 'Sending…';
+      btnText.textContent = 'Sending…';
+      btnArrow.textContent = '';
 
-      // ── Replace YOUR_FORM_ID below with your Formspree form ID ──
-      // Sign up free at https://formspree.io — takes 2 minutes.
-      // Example: https://formspree.io/f/abcdefgh
+      // Replace YOUR_FORM_ID with your Formspree ID — free at formspree.io
       const FORMSPREE_URL = 'https://formspree.io/f/YOUR_FORM_ID';
 
       try {
         const res = await fetch(FORMSPREE_URL, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify({ name, email, _subject: 'New MSJ Lead' }),
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({ name, email, _subject: 'New MSJ Lead 🎉' }),
         });
-
-        if (res.ok || FORMSPREE_URL.includes('YOUR_FORM_ID')) {
-          // Show success + direct link regardless (remove the OR condition once Formspree is set up)
-          formArea.style.display = 'none';
-          success.style.display = 'block';
-        } else {
-          throw new Error('Server error');
-        }
-      } catch {
-        // Fallback: still show success and send to the guide
-        formArea.style.display = 'none';
-        success.style.display = 'block';
-      }
+        if (res.ok || FORMSPREE_URL.includes('YOUR_FORM_ID')) showSuccess();
+        else throw new Error();
+      } catch { showSuccess(); }
     });
+
+    function showSuccess() {
+      formArea.style.display = 'none';
+      success.style.display  = 'block';
+    }
   </script>
 </body>
 </html>
