@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Soccer Journey — Unlock Your Free Guide</title>
+  <meta name="description" content="Get the free guide that shows you how to eliminate fear and play with full confidence on the field." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #00C46A;
+      --green-dark: #009F56;
+      --bg: #0A0E17;
+      --card: #111827;
+      --text: #F1F5F9;
+      --muted: #94A3B8;
+      --border: rgba(255,255,255,0.08);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+    }
+
+    /* subtle radial glow behind everything */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,196,106,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .wrap {
+      position: relative;
+      width: 100%;
+      max-width: 520px;
+      text-align: center;
+    }
+
+    /* ── Badge ── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0,196,106,0.12);
+      border: 1px solid rgba(0,196,106,0.3);
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+    }
+    .badge span { font-size: 14px; }
+
+    /* ── Headline ── */
+    h1 {
+      font-size: clamp(28px, 6vw, 42px);
+      font-weight: 900;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+    h1 em {
+      font-style: normal;
+      color: var(--green);
+    }
+
+    /* ── Sub ── */
+    .sub {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 420px;
+      margin: 0 auto 32px;
+    }
+
+    /* ── Social proof ── */
+    .proof {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 32px;
+    }
+    .avatars {
+      display: flex;
+    }
+    .avatars img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid var(--bg);
+      margin-left: -8px;
+      object-fit: cover;
+    }
+    .avatars img:first-child { margin-left: 0; }
+    .proof-text {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .proof-text strong { color: var(--text); }
+
+    /* ── Card ── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px 28px;
+    }
+
+    /* ── Bullets ── */
+    .bullets {
+      list-style: none;
+      text-align: left;
+      margin-bottom: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .bullets li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .bullets li::before {
+      content: '✓';
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      background: rgba(0,196,106,0.15);
+      color: var(--green);
+      border-radius: 50%;
+      font-size: 11px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+
+    /* ── Form ── */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    input[type="email"],
+    input[type="text"] {
+      width: 100%;
+      padding: 14px 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-size: 15px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input::placeholder { color: #4B5563; }
+    input:focus { border-color: rgba(0,196,106,0.5); }
+
+    button[type="submit"] {
+      width: 100%;
+      padding: 16px;
+      background: var(--green);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 800;
+      font-family: inherit;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      letter-spacing: -0.01em;
+      transition: background 0.2s, transform 0.1s;
+    }
+    button[type="submit"]:hover { background: var(--green-dark); }
+    button[type="submit"]:active { transform: scale(0.98); }
+
+    .disclaimer {
+      margin-top: 12px;
+      font-size: 12px;
+      color: #4B5563;
+    }
+    .disclaimer a { color: #6B7280; }
+
+    /* ── Success state ── */
+    #success {
+      display: none;
+      text-align: center;
+      padding: 8px 0;
+    }
+    #success .check {
+      font-size: 48px;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    #success h2 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    #success p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+    #success a.cta-link {
+      display: inline-block;
+      padding: 14px 28px;
+      background: var(--green);
+      color: #fff;
+      font-weight: 800;
+      font-size: 15px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    #success a.cta-link:hover { background: var(--green-dark); }
+
+    /* ── Footer ── */
+    footer {
+      margin-top: 28px;
+      font-size: 12px;
+      color: #374151;
+    }
+
+    @media (max-width: 400px) {
+      .card { padding: 24px 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <div class="badge"><span>⚽</span> Free Guide — My Soccer Journey</div>
+
+    <h1>Stop Playing Scared.<br><em>Start Playing Free.</em></h1>
+
+    <p class="sub">
+      Enter your email and I'll send you the exact framework I use to eliminate fear and perform at your best — every single game.
+    </p>
+
+    <!-- Social proof -->
+    <div class="proof">
+      <!-- placeholder avatars using a color-block approach (no external img needed) -->
+      <div class="avatars" aria-hidden="true">
+        <svg width="32" height="32" viewBox="0 0 32 32" style="border-radius:50%;border:2px solid #0A0E17"><rect width="32" height="32" fill="#1E40AF"/><text x="16" y="21" text-anchor="middle" font-size="14" fill="#fff" font-family="Inter,sans-serif">M</text></svg>
+        <svg width="32" height="32" viewBox="0 0 32 32" style="border-radius:50%;border:2px solid #0A0E17;margin-left:-8px"><rect width="32" height="32" fill="#7C3AED"/><text x="16" y="21" text-anchor="middle" font-size="14" fill="#fff" font-family="Inter,sans-serif">J</text></svg>
+        <svg width="32" height="32" viewBox="0 0 32 32" style="border-radius:50%;border:2px solid #0A0E17;margin-left:-8px"><rect width="32" height="32" fill="#BE123C"/><text x="16" y="21" text-anchor="middle" font-size="14" fill="#fff" font-family="Inter,sans-serif">A</text></svg>
+        <svg width="32" height="32" viewBox="0 0 32 32" style="border-radius:50%;border:2px solid #0A0E17;margin-left:-8px"><rect width="32" height="32" fill="#065F46"/><text x="16" y="21" text-anchor="middle" font-size="14" fill="#fff" font-family="Inter,sans-serif">R</text></svg>
+      </div>
+      <p class="proof-text"><strong>Hundreds of players</strong> already unlocked this</p>
+    </div>
+
+    <!-- Card -->
+    <div class="card">
+      <div id="form-area">
+        <ul class="bullets">
+          <li>The 6 pillars that rewire how you think under pressure</li>
+          <li>Why fear is costing you games — and how to shut it off</li>
+          <li>A simple daily ritual top players use to stay locked in</li>
+        </ul>
+
+        <form class="form-group" id="lead-form" novalidate>
+          <input type="text" name="name" id="name" placeholder="Your first name" required autocomplete="given-name" />
+          <input type="email" name="email" id="email" placeholder="Your best email address" required autocomplete="email" />
+          <button type="submit" id="submit-btn">
+            Send Me the Free Guide →
+          </button>
+          <p class="disclaimer">100% free. No spam, ever. Unsubscribe anytime.</p>
+        </form>
+      </div>
+
+      <!-- Success message (shown after submit) -->
+      <div id="success">
+        <div class="check">🎉</div>
+        <h2>You're in!</h2>
+        <p>Click below to access your free guide right now.</p>
+        <a class="cta-link" href="https://mysoccerjourney.net/eliminatefear/6pillars/socialfunnel" target="_blank" rel="noopener">
+          Access the Free Guide →
+        </a>
+      </div>
+    </div>
+
+    <footer>© My Soccer Journey. All rights reserved.</footer>
+  </div>
+
+  <script>
+    const form = document.getElementById('lead-form');
+    const formArea = document.getElementById('form-area');
+    const success = document.getElementById('success');
+    const submitBtn = document.getElementById('submit-btn');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+
+      if (!name || !email) return;
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+
+      // ── Replace YOUR_FORM_ID below with your Formspree form ID ──
+      // Sign up free at https://formspree.io — takes 2 minutes.
+      // Example: https://formspree.io/f/abcdefgh
+      const FORMSPREE_URL = 'https://formspree.io/f/YOUR_FORM_ID';
+
+      try {
+        const res = await fetch(FORMSPREE_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({ name, email, _subject: 'New MSJ Lead' }),
+        });
+
+        if (res.ok || FORMSPREE_URL.includes('YOUR_FORM_ID')) {
+          // Show success + direct link regardless (remove the OR condition once Formspree is set up)
+          formArea.style.display = 'none';
+          success.style.display = 'block';
+        } else {
+          throw new Error('Server error');
+        }
+      } catch {
+        // Fallback: still show success and send to the guide
+        formArea.style.display = 'none';
+        success.style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>
