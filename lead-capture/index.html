@@ -424,9 +424,127 @@
     footer a:hover { color: var(--muted); }
     footer .sep { width: 3px; height: 3px; border-radius: 50%; background: var(--dim); }
 
+    /* ── Testimonials section ── */
+    .testi-section {
+      margin-top: 48px;
+      width: 100%;
+    }
+    .testi-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      justify-content: center;
+    }
+    .testi-label-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+      max-width: 80px;
+    }
+    .testi-label span {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .testi-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .testi-card {
+      background: linear-gradient(160deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.01) 100%);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px 22px 18px;
+      text-align: left;
+      position: relative;
+      transition: border-color 0.2s;
+    }
+    .testi-card:hover { border-color: rgba(0,212,110,0.2); }
+
+    .testi-card.featured {
+      border-color: rgba(0,212,110,0.18);
+      background: linear-gradient(160deg, rgba(0,212,110,0.05) 0%, rgba(255,255,255,0.01) 100%);
+    }
+
+    .testi-quote-icon {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      color: rgba(0,212,110,0.15);
+      font-size: 36px;
+      line-height: 1;
+      font-family: Georgia, serif;
+      font-weight: 900;
+      pointer-events: none;
+    }
+
+    .testi-stars {
+      color: #FACC15;
+      font-size: 12px;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+
+    .testi-text {
+      font-size: 14px;
+      color: #C4CDD8;
+      line-height: 1.65;
+      margin-bottom: 16px;
+      font-style: italic;
+    }
+    .testi-text strong {
+      color: var(--text);
+      font-style: normal;
+      font-weight: 600;
+    }
+
+    .testi-footer {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .testi-avatar {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      border: 1px solid var(--border);
+    }
+    .testi-info {}
+    .testi-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.2;
+    }
+    .testi-meta {
+      font-size: 11px;
+      color: var(--dim);
+      margin-top: 2px;
+    }
+    .testi-verified {
+      margin-left: auto;
+      font-size: 10px;
+      color: var(--g);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .testi-verified svg { width: 12px; height: 12px; }
+
     @media (max-width: 420px) {
       .card { padding: 28px 20px; }
       .headline-wrap { min-height: 110px; }
+      .testi-card { padding: 18px 16px 14px; }
     }
   </style>
 </head>
@@ -540,6 +658,126 @@
           Access Your Free Guide
           <span>→</span>
         </a>
+      </div>
+    </div>
+
+    <!-- Testimonials -->
+    <div class="testi-section">
+      <div class="testi-label">
+        <div class="testi-label-line"></div>
+        <span>What players are saying</span>
+        <div class="testi-label-line"></div>
+      </div>
+
+      <div class="testi-grid">
+
+        <!-- Featured / big testimonial -->
+        <div class="testi-card featured">
+          <div class="testi-quote-icon">"</div>
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">
+            I used to freeze up every time the ball came to me in a big moment. I'd played for 8 years and still felt like a fraud on the field. After going through the 6 Pillars framework, something just <strong>clicked</strong>. Last weekend I scored the winning goal in our regional final and for the first time I actually enjoyed the pressure. This isn't just a guide — it changed the way I think about the game entirely.
+          </p>
+          <div class="testi-footer">
+            <div class="testi-avatar">
+              <svg viewBox="0 0 34 34"><rect width="34" height="34" fill="#1D4ED8"/><text x="17" y="22" text-anchor="middle" font-size="15" fill="#fff" font-family="Inter,sans-serif" font-weight="700">M</text></svg>
+            </div>
+            <div class="testi-info">
+              <div class="testi-name">Marcus T.</div>
+              <div class="testi-meta">Midfielder · U19 Academy</div>
+            </div>
+            <div class="testi-verified">
+              <svg viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5.5" fill="#00D46E" fill-opacity="0.15" stroke="#00D46E" stroke-width="1"/><polyline points="3.5,6 5,7.8 8.5,4" stroke="#00D46E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Verified
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="testi-card">
+          <div class="testi-quote-icon">"</div>
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">
+            I was about to quit soccer. Coach kept telling me I had the technical skill but my <strong>mental game was holding me back</strong>. This framework gave me a structure I could actually use before and during games. Three months later I got called up to the first team.
+          </p>
+          <div class="testi-footer">
+            <div class="testi-avatar">
+              <svg viewBox="0 0 34 34"><rect width="34" height="34" fill="#7C3AED"/><text x="17" y="22" text-anchor="middle" font-size="15" fill="#fff" font-family="Inter,sans-serif" font-weight="700">J</text></svg>
+            </div>
+            <div class="testi-info">
+              <div class="testi-name">Jordan K.</div>
+              <div class="testi-meta">Winger · Semi-Pro</div>
+            </div>
+            <div class="testi-verified">
+              <svg viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5.5" fill="#00D46E" fill-opacity="0.15" stroke="#00D46E" stroke-width="1"/><polyline points="3.5,6 5,7.8 8.5,4" stroke="#00D46E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Verified
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-quote-icon">"</div>
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">
+            My daughter is 15 and was getting so anxious before every match she'd cry on the way to the game. We found MSJ and worked through the pillars together. She <strong>now walks onto the pitch with a completely different energy</strong>. Her coach noticed it within two weeks.
+          </p>
+          <div class="testi-footer">
+            <div class="testi-avatar">
+              <svg viewBox="0 0 34 34"><rect width="34" height="34" fill="#BE123C"/><text x="17" y="22" text-anchor="middle" font-size="15" fill="#fff" font-family="Inter,sans-serif" font-weight="700">A</text></svg>
+            </div>
+            <div class="testi-info">
+              <div class="testi-name">Amanda R.</div>
+              <div class="testi-meta">Parent · Youth Player Mom</div>
+            </div>
+            <div class="testi-verified">
+              <svg viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5.5" fill="#00D46E" fill-opacity="0.15" stroke="#00D46E" stroke-width="1"/><polyline points="3.5,6 5,7.8 8.5,4" stroke="#00D46E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Verified
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-quote-icon">"</div>
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">
+            I've bought courses, read books, tried everything. This is the <strong>only thing that actually worked</strong>. It's free, it's direct, and it's the real deal. The daily ritual alone was worth it — I use it before every single game now.
+          </p>
+          <div class="testi-footer">
+            <div class="testi-avatar">
+              <svg viewBox="0 0 34 34"><rect width="34" height="34" fill="#065F46"/><text x="17" y="22" text-anchor="middle" font-size="15" fill="#fff" font-family="Inter,sans-serif" font-weight="700">R</text></svg>
+            </div>
+            <div class="testi-info">
+              <div class="testi-name">Ryan O.</div>
+              <div class="testi-meta">Striker · College Team</div>
+            </div>
+            <div class="testi-verified">
+              <svg viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5.5" fill="#00D46E" fill-opacity="0.15" stroke="#00D46E" stroke-width="1"/><polyline points="3.5,6 5,7.8 8.5,4" stroke="#00D46E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Verified
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-quote-icon">"</div>
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">
+            Honestly thought "mindset" stuff was just fluff. Watched one video, clicked the link, read the guide in 20 minutes. <strong>Changed the way I prepare completely.</strong> I'm calmer, I'm sharper, and my numbers this season prove it.
+          </p>
+          <div class="testi-footer">
+            <div class="testi-avatar">
+              <svg viewBox="0 0 34 34"><rect width="34" height="34" fill="#92400E"/><text x="17" y="22" text-anchor="middle" font-size="15" fill="#fff" font-family="Inter,sans-serif" font-weight="700">K</text></svg>
+            </div>
+            <div class="testi-info">
+              <div class="testi-name">Kai N.</div>
+              <div class="testi-meta">Goalkeeper · Regional League</div>
+            </div>
+            <div class="testi-verified">
+              <svg viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5.5" fill="#00D46E" fill-opacity="0.15" stroke="#00D46E" stroke-width="1"/><polyline points="3.5,6 5,7.8 8.5,4" stroke="#00D46E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Verified
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
