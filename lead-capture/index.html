@@ -3,778 +3,626 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Soccer Journey — Unlock Your Free Guide</title>
-  <meta name="description" content="The free framework that eliminates fear and unlocks your best soccer." />
+  <title>My Soccer Journey — Free Guide</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --g: #00D46E;
-      --g2: #00A855;
-      --bg: #060910;
-      --surface: #0D1220;
-      --card: #111827;
-      --border: rgba(255,255,255,0.07);
-      --text: #F0F4FF;
-      --muted: #8896AB;
-      --dim: #3D4D63;
+      --green: #22C55E;
+      --green-dim: rgba(34,197,94,0.12);
+      --green-border: rgba(34,197,94,0.22);
+      --bg: #000000;
+      --surface: #0C0C0C;
+      --card: #111111;
+      --border: rgba(255,255,255,0.08);
+      --text: #FFFFFF;
+      --sub: #A0A0A0;
+      --dim: #444444;
     }
 
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Inter', sans-serif;
+    html, body {
       background: var(--bg);
       color: var(--text);
+      font-family: 'Inter', sans-serif;
       min-height: 100vh;
+    }
+
+    body {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 40px 20px 60px;
-      overflow-x: hidden;
+      padding: 64px 20px 80px;
     }
 
-    /* ── Background effects ── */
-    .bg-glow {
+    /* ── Glow ── */
+    .glow {
       position: fixed;
-      inset: 0;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 500px;
+      background: radial-gradient(ellipse at center, rgba(34,197,94,0.09) 0%, transparent 70%);
       pointer-events: none;
       z-index: 0;
-      background:
-        radial-gradient(ellipse 70% 50% at 50% -10%, rgba(0,212,110,0.13) 0%, transparent 65%),
-        radial-gradient(ellipse 40% 40% at 80% 80%, rgba(0,80,200,0.07) 0%, transparent 60%);
-    }
-    .bg-grid {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-      background-size: 60px 60px;
-      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
     }
 
-    /* ── Layout ── */
-    .wrap {
+    /* ── Page wrapper ── */
+    .page {
       position: relative;
       z-index: 1;
       width: 100%;
-      max-width: 560px;
-      text-align: center;
+      max-width: 540px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    /* ── Logo / Brand ── */
+    /* ── Brand ── */
     .brand {
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 40px;
-      opacity: 0.9;
+      gap: 10px;
+      margin-bottom: 52px;
     }
-    .brand-icon {
-      width: 36px;
-      height: 36px;
-      background: linear-gradient(135deg, var(--g), var(--g2));
-      border-radius: 10px;
+    .brand-ball {
+      width: 32px;
+      height: 32px;
+      background: var(--green);
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
-      box-shadow: 0 0 20px rgba(0,212,110,0.3);
+      font-size: 16px;
+      flex-shrink: 0;
     }
     .brand-name {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 700;
-      letter-spacing: 0.04em;
-      color: var(--muted);
+      letter-spacing: 0.08em;
       text-transform: uppercase;
+      color: var(--sub);
     }
 
     /* ── Badge ── */
     .badge {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      background: rgba(0,212,110,0.08);
-      border: 1px solid rgba(0,212,110,0.2);
-      color: var(--g);
+      gap: 7px;
+      background: var(--green-dim);
+      border: 1px solid var(--green-border);
+      color: var(--green);
       font-size: 11px;
       font-weight: 700;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.09em;
       text-transform: uppercase;
-      padding: 5px 14px;
+      padding: 5px 13px;
       border-radius: 100px;
-      margin-bottom: 28px;
+      margin-bottom: 32px;
     }
-    .badge-dot {
+    .pulse {
       width: 6px; height: 6px;
-      background: var(--g);
+      background: var(--green);
       border-radius: 50%;
-      animation: pulse-dot 2s ease-in-out infinite;
+      animation: pulse 2s ease-in-out infinite;
     }
-    @keyframes pulse-dot {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.7); }
-    }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.3;transform:scale(0.6)} }
 
     /* ── Headline ── */
-    .headline-wrap {
-      margin-bottom: 8px;
-      min-height: 130px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+    .headline {
+      text-align: center;
+      margin-bottom: 20px;
     }
-
-    .headline-static {
-      font-size: clamp(13px, 3vw, 16px);
-      font-weight: 500;
-      color: var(--muted);
-      letter-spacing: 0.02em;
-      margin-bottom: 10px;
-    }
-
-    .headline-typed {
-      font-size: clamp(30px, 7vw, 46px);
+    .hl-static {
+      display: block;
+      font-size: clamp(32px, 7vw, 50px);
       font-weight: 900;
-      line-height: 1.12;
-      letter-spacing: -0.03em;
-      color: var(--text);
-      min-height: 1.2em;
-      display: block;
+      letter-spacing: -0.035em;
+      line-height: 1.1;
+      color: #fff;
     }
-    .headline-typed .line1 { display: block; }
-    .headline-typed .line2 {
+    .hl-dynamic-wrap {
       display: block;
-      color: var(--g);
-      background: linear-gradient(90deg, var(--g), #00FFB2);
+      font-size: clamp(32px, 7vw, 50px);
+      font-weight: 900;
+      letter-spacing: -0.035em;
+      line-height: 1.1;
+      min-height: 1.15em;
+      margin-top: 2px;
+    }
+    .hl-typed {
+      background: linear-gradient(90deg, var(--green), #6EE7B7);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-
-    /* Cursor */
     .cursor {
       display: inline-block;
       width: 3px;
-      height: 0.85em;
-      background: var(--g);
+      height: 0.75em;
+      background: var(--green);
       border-radius: 2px;
-      margin-left: 3px;
       vertical-align: middle;
-      animation: blink 0.7s step-end infinite;
+      margin-left: 2px;
+      animation: blink 0.65s step-end infinite;
     }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
     /* ── Sub ── */
     .sub {
       font-size: 16px;
-      color: var(--muted);
+      color: var(--sub);
       line-height: 1.65;
-      max-width: 420px;
-      margin: 20px auto 36px;
+      text-align: center;
+      max-width: 400px;
+      margin-bottom: 40px;
     }
 
-    /* ── Social proof strip ── */
+    /* ── Proof strip ── */
     .proof {
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 36px;
+      gap: 14px;
+      margin-bottom: 40px;
     }
-    .avatars { display: flex; }
-    .avatar {
-      width: 30px; height: 30px;
+    .av-stack { display: flex; }
+    .av {
+      width: 28px; height: 28px;
       border-radius: 50%;
-      border: 2px solid var(--bg);
-      margin-left: -8px;
+      border: 2px solid #000;
+      margin-left: -7px;
       overflow: hidden;
+      flex-shrink: 0;
     }
-    .avatars .avatar:first-child { margin-left: 0; }
-    .proof-stars { color: #FACC15; font-size: 12px; letter-spacing: 1px; }
-    .proof-text { font-size: 13px; color: var(--muted); }
-    .proof-text strong { color: var(--text); font-weight: 600; }
-    .proof-divider {
-      width: 1px; height: 24px;
-      background: var(--border);
-    }
+    .av:first-child { margin-left: 0; }
+    .proof-sep { width: 1px; height: 20px; background: var(--border); }
+    .proof-text { font-size: 13px; color: var(--sub); }
+    .proof-text b { color: #fff; font-weight: 700; }
+    .stars { color: #FACC15; font-size: 11px; letter-spacing: 1.5px; }
 
-    /* ── Card ── */
+    /* ── Main card ── */
     .card {
-      background: linear-gradient(160deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+      width: 100%;
+      background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 36px 32px;
-      backdrop-filter: blur(12px);
-      position: relative;
-      overflow: hidden;
+      border-radius: 20px;
+      padding: 32px 28px;
+      margin-bottom: 16px;
     }
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 50%;
-      transform: translateX(-50%);
-      width: 60%;
+    .card-top {
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(0,212,110,0.4), transparent);
+      background: linear-gradient(90deg, transparent, var(--green-border), transparent);
+      margin: -32px -28px 28px;
+      border-radius: 20px 20px 0 0;
     }
 
     /* ── Bullets ── */
     .bullets {
       list-style: none;
-      text-align: left;
-      margin-bottom: 28px;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 13px;
+      margin-bottom: 28px;
     }
     .bullets li {
       display: flex;
       align-items: flex-start;
-      gap: 12px;
+      gap: 11px;
       font-size: 14px;
-      color: var(--muted);
+      color: var(--sub);
       line-height: 1.55;
     }
-    .bullet-icon {
+    .chk {
       flex-shrink: 0;
       margin-top: 1px;
-      width: 18px; height: 18px;
-      background: rgba(0,212,110,0.12);
-      border: 1px solid rgba(0,212,110,0.25);
+      width: 17px; height: 17px;
       border-radius: 50%;
+      background: var(--green-dim);
+      border: 1px solid var(--green-border);
       display: flex;
       align-items: center;
       justify-content: center;
     }
-    .bullet-icon svg { width: 9px; height: 9px; }
+    .chk svg { width: 8px; height: 8px; }
 
     /* ── Divider ── */
-    .divider {
+    .rule {
       height: 1px;
       background: var(--border);
-      margin: 24px 0;
-    }
-
-    /* ── Form label ── */
-    .form-label {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--muted);
-      text-align: left;
-      margin-bottom: 14px;
-      display: block;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
+      margin: 0 0 24px;
     }
 
     /* ── Form ── */
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .input-wrap {
+    .field {
       position: relative;
+      margin-bottom: 10px;
     }
-    .input-icon {
+    .field-icon {
       position: absolute;
-      left: 14px;
-      top: 50%;
+      left: 14px; top: 50%;
       transform: translateY(-50%);
       color: var(--dim);
-      pointer-events: none;
       display: flex;
+      pointer-events: none;
     }
-    .input-icon svg { width: 16px; height: 16px; }
+    .field-icon svg { width: 15px; height: 15px; }
 
-    input[type="email"],
-    input[type="text"] {
+    input {
       width: 100%;
-      padding: 14px 16px 14px 42px;
+      padding: 13px 14px 13px 40px;
       background: rgba(255,255,255,0.04);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      color: var(--text);
-      font-size: 15px;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 14px;
       font-family: inherit;
       outline: none;
-      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+      transition: border-color 0.18s, box-shadow 0.18s;
     }
-    input::placeholder { color: var(--dim); }
+    input::placeholder { color: #333; }
     input:focus {
-      border-color: rgba(0,212,110,0.45);
-      background: rgba(0,212,110,0.04);
-      box-shadow: 0 0 0 3px rgba(0,212,110,0.08);
+      border-color: rgba(34,197,94,0.4);
+      box-shadow: 0 0 0 3px rgba(34,197,94,0.07);
     }
 
-    button[type="submit"] {
+    .btn {
       width: 100%;
-      padding: 16px;
-      background: linear-gradient(135deg, var(--g) 0%, #00B860 100%);
-      color: #fff;
+      margin-top: 4px;
+      padding: 15px;
+      background: var(--green);
+      color: #000;
       font-size: 15px;
       font-weight: 800;
       font-family: inherit;
       border: none;
-      border-radius: 12px;
+      border-radius: 10px;
       cursor: pointer;
       letter-spacing: -0.01em;
-      transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
-      box-shadow: 0 4px 24px rgba(0,212,110,0.3);
-      margin-top: 4px;
+      transition: opacity 0.15s, transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 0 28px rgba(34,197,94,0.25);
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
+      gap: 7px;
     }
-    button[type="submit"]:hover {
-      opacity: 0.92;
-      transform: translateY(-1px);
-      box-shadow: 0 8px 32px rgba(0,212,110,0.4);
-    }
-    button[type="submit"]:active { transform: scale(0.98) translateY(0); }
-    button[type="submit"]:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .btn:hover { opacity: 0.88; transform: translateY(-1px); box-shadow: 0 4px 32px rgba(34,197,94,0.35); }
+    .btn:active { transform: scale(0.98); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .btn-arr { transition: transform 0.18s; }
+    .btn:hover .btn-arr { transform: translateX(3px); }
 
-    .btn-arrow {
-      transition: transform 0.2s;
-    }
-    button[type="submit"]:hover .btn-arrow { transform: translateX(3px); }
-
-    .disclaimer {
-      margin-top: 14px;
-      font-size: 12px;
-      color: var(--dim);
+    .lock-note {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 5px;
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--dim);
     }
-    .disclaimer svg { color: var(--dim); flex-shrink: 0; }
+    .lock-note svg { width: 11px; height: 11px; }
 
     /* ── Success ── */
     #success {
       display: none;
       text-align: center;
-      padding: 12px 0;
+      padding: 8px 0;
     }
-    .success-icon {
-      width: 64px; height: 64px;
-      background: rgba(0,212,110,0.1);
-      border: 2px solid rgba(0,212,110,0.3);
+    .success-ring {
+      width: 60px; height: 60px;
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 20px;
-      font-size: 28px;
+      background: var(--green-dim);
+      border: 1px solid var(--green-border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px;
+      margin: 0 auto 18px;
     }
-    #success h2 {
-      font-size: 24px;
-      font-weight: 900;
-      margin-bottom: 8px;
-      letter-spacing: -0.02em;
-    }
-    #success p {
-      color: var(--muted);
-      font-size: 14px;
-      margin-bottom: 24px;
-      line-height: 1.6;
-    }
-    #success a.cta-link {
+    #success h2 { font-size: 22px; font-weight: 900; letter-spacing: -0.02em; margin-bottom: 8px; }
+    #success p { font-size: 14px; color: var(--sub); line-height: 1.6; margin-bottom: 22px; }
+    .success-btn {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 16px 32px;
-      background: linear-gradient(135deg, var(--g), #00B860);
-      color: #fff;
+      padding: 14px 28px;
+      background: var(--green);
+      color: #000;
       font-weight: 800;
-      font-size: 15px;
-      border-radius: 12px;
+      font-size: 14px;
+      border-radius: 10px;
       text-decoration: none;
-      transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 4px 24px rgba(0,212,110,0.35);
+      transition: opacity 0.15s, transform 0.15s;
+      box-shadow: 0 0 24px rgba(34,197,94,0.25);
     }
-    #success a.cta-link:hover {
-      opacity: 0.9;
-      transform: translateY(-1px);
-      box-shadow: 0 8px 32px rgba(0,212,110,0.45);
-    }
+    .success-btn:hover { opacity: 0.88; transform: translateY(-1px); }
 
-    /* ── Footer ── */
-    footer {
-      margin-top: 32px;
-      font-size: 12px;
-      color: var(--dim);
+    /* ── Testimonials ── */
+    .testi-wrap { width: 100%; margin-top: 48px; }
+
+    .section-label {
       display: flex;
       align-items: center;
-      gap: 16px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    footer a { color: var(--dim); text-decoration: none; }
-    footer a:hover { color: var(--muted); }
-    footer .sep { width: 3px; height: 3px; border-radius: 50%; background: var(--dim); }
-
-    /* ── Testimonials section ── */
-    .testi-section {
-      margin-top: 48px;
-      width: 100%;
-    }
-    .testi-label {
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      gap: 14px;
       margin-bottom: 20px;
-      justify-content: center;
     }
-    .testi-label-line {
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-      max-width: 80px;
-    }
-    .testi-label span {
-      font-size: 11px;
+    .section-label-line { flex: 1; height: 1px; background: var(--border); }
+    .section-label span {
+      font-size: 10px;
       font-weight: 700;
-      color: var(--dim);
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
+      color: var(--dim);
       white-space: nowrap;
     }
 
-    .testi-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
+    .testi-list { display: flex; flex-direction: column; gap: 10px; }
 
-    .testi-card {
-      background: linear-gradient(160deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.01) 100%);
+    .testi {
+      background: var(--card);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 22px 22px 18px;
+      padding: 20px 20px 16px;
       text-align: left;
-      position: relative;
-      transition: border-color 0.2s;
+      transition: border-color 0.18s;
     }
-    .testi-card:hover { border-color: rgba(0,212,110,0.2); }
-
-    .testi-card.featured {
-      border-color: rgba(0,212,110,0.18);
-      background: linear-gradient(160deg, rgba(0,212,110,0.05) 0%, rgba(255,255,255,0.01) 100%);
+    .testi:hover { border-color: rgba(34,197,94,0.18); }
+    .testi.big {
+      border-color: rgba(34,197,94,0.15);
+      background: linear-gradient(150deg, rgba(34,197,94,0.04) 0%, var(--card) 60%);
     }
 
-    .testi-quote-icon {
-      position: absolute;
-      top: 18px;
-      right: 18px;
-      color: rgba(0,212,110,0.15);
-      font-size: 36px;
-      line-height: 1;
-      font-family: Georgia, serif;
-      font-weight: 900;
-      pointer-events: none;
+    .testi-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 12px;
     }
+    .t-stars { color: #FACC15; font-size: 11px; letter-spacing: 2px; }
+    .t-quote { font-size: 28px; line-height: 1; color: rgba(34,197,94,0.15); font-family: Georgia, serif; font-weight: 900; }
 
-    .testi-stars {
-      color: #FACC15;
-      font-size: 12px;
-      letter-spacing: 2px;
-      margin-bottom: 10px;
-    }
-
-    .testi-text {
-      font-size: 14px;
-      color: #C4CDD8;
+    .testi-body {
+      font-size: 13.5px;
+      color: #888;
       line-height: 1.65;
       margin-bottom: 16px;
       font-style: italic;
     }
-    .testi-text strong {
-      color: var(--text);
-      font-style: normal;
-      font-weight: 600;
-    }
+    .testi-body b { color: #ddd; font-style: normal; font-weight: 600; }
 
-    .testi-footer {
+    .testi-foot {
       display: flex;
       align-items: center;
       gap: 10px;
     }
-    .testi-avatar {
-      width: 34px; height: 34px;
+    .t-av {
+      width: 32px; height: 32px;
       border-radius: 50%;
       overflow: hidden;
       flex-shrink: 0;
       border: 1px solid var(--border);
     }
-    .testi-info {}
-    .testi-name {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text);
-      line-height: 1.2;
-    }
-    .testi-meta {
-      font-size: 11px;
-      color: var(--dim);
-      margin-top: 2px;
-    }
-    .testi-verified {
+    .t-name { font-size: 13px; font-weight: 700; color: #fff; line-height: 1.2; }
+    .t-role { font-size: 11px; color: var(--dim); margin-top: 2px; }
+    .t-verified {
       margin-left: auto;
       font-size: 10px;
-      color: var(--g);
-      font-weight: 600;
+      font-weight: 700;
+      color: var(--green);
       letter-spacing: 0.04em;
       display: flex;
       align-items: center;
       gap: 4px;
     }
-    .testi-verified svg { width: 12px; height: 12px; }
+    .t-verified svg { width: 11px; height: 11px; }
 
-    @media (max-width: 420px) {
-      .card { padding: 28px 20px; }
-      .headline-wrap { min-height: 110px; }
-      .testi-card { padding: 18px 16px 14px; }
+    /* ── Footer ── */
+    footer {
+      margin-top: 40px;
+      font-size: 11px;
+      color: var(--dim);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    footer a { color: var(--dim); text-decoration: none; }
+    footer a:hover { color: var(--sub); }
+    .fdot { width: 3px; height: 3px; border-radius: 50%; background: var(--dim); }
+
+    @media (max-width: 400px) {
+      .card { padding: 24px 18px; }
+      .testi { padding: 16px 16px 14px; }
+      body { padding: 48px 16px 64px; }
     }
   </style>
 </head>
 <body>
-  <div class="bg-glow"></div>
-  <div class="bg-grid"></div>
+  <div class="glow"></div>
 
-  <div class="wrap">
+  <div class="page">
 
     <!-- Brand -->
     <div class="brand">
-      <div class="brand-icon">⚽</div>
+      <div class="brand-ball">⚽</div>
       <span class="brand-name">My Soccer Journey</span>
     </div>
 
     <!-- Badge -->
     <div class="badge">
-      <div class="badge-dot"></div>
-      Free Guide — Limited Access
+      <div class="pulse"></div>
+      Free Guide
     </div>
 
-    <!-- Animated headline -->
-    <div class="headline-wrap">
-      <span class="headline-static">You were built for this.</span>
-      <span class="headline-typed" id="typed-text" aria-live="polite"></span>
+    <!-- Headline: static top, animated bottom -->
+    <div class="headline">
+      <span class="hl-static">Stop Playing</span>
+      <span class="hl-dynamic-wrap">
+        <span class="hl-typed" id="hl-typed"></span><span class="cursor"></span>
+      </span>
     </div>
 
+    <!-- Sub -->
     <p class="sub">
-      Drop your email and get the free framework that top players use to shut off fear and show up fully — every single game.
+      Drop your email and get the free framework that top players use to shut off fear and perform at their best — every single game.
     </p>
 
-    <!-- Social proof -->
+    <!-- Proof -->
     <div class="proof">
-      <div class="avatars" aria-hidden="true">
-        <div class="avatar"><svg viewBox="0 0 30 30"><rect width="30" height="30" fill="#1E40AF"/><text x="15" y="20" text-anchor="middle" font-size="13" fill="#fff" font-family="Inter,sans-serif" font-weight="700">M</text></svg></div>
-        <div class="avatar"><svg viewBox="0 0 30 30"><rect width="30" height="30" fill="#7C3AED"/><text x="15" y="20" text-anchor="middle" font-size="13" fill="#fff" font-family="Inter,sans-serif" font-weight="700">J</text></svg></div>
-        <div class="avatar"><svg viewBox="0 0 30 30"><rect width="30" height="30" fill="#BE123C"/><text x="15" y="20" text-anchor="middle" font-size="13" fill="#fff" font-family="Inter,sans-serif" font-weight="700">A</text></svg></div>
-        <div class="avatar"><svg viewBox="0 0 30 30"><rect width="30" height="30" fill="#065F46"/><text x="15" y="20" text-anchor="middle" font-size="13" fill="#fff" font-family="Inter,sans-serif" font-weight="700">R</text></svg></div>
-        <div class="avatar"><svg viewBox="0 0 30 30"><rect width="30" height="30" fill="#92400E"/><text x="15" y="20" text-anchor="middle" font-size="13" fill="#fff" font-family="Inter,sans-serif" font-weight="700">K</text></svg></div>
+      <div class="av-stack">
+        <div class="av"><svg viewBox="0 0 28 28"><rect width="28" height="28" fill="#1D4ED8"/><text x="14" y="19" text-anchor="middle" font-size="12" fill="#fff" font-family="Inter,sans-serif" font-weight="700">M</text></svg></div>
+        <div class="av"><svg viewBox="0 0 28 28"><rect width="28" height="28" fill="#7C3AED"/><text x="14" y="19" text-anchor="middle" font-size="12" fill="#fff" font-family="Inter,sans-serif" font-weight="700">J</text></svg></div>
+        <div class="av"><svg viewBox="0 0 28 28"><rect width="28" height="28" fill="#BE123C"/><text x="14" y="19" text-anchor="middle" font-size="12" fill="#fff" font-family="Inter,sans-serif" font-weight="700">A</text></svg></div>
+        <div class="av"><svg viewBox="0 0 28 28"><rect width="28" height="28" fill="#065F46"/><text x="14" y="19" text-anchor="middle" font-size="12" fill="#fff" font-family="Inter,sans-serif" font-weight="700">R</text></svg></div>
+        <div class="av"><svg viewBox="0 0 28 28"><rect width="28" height="28" fill="#92400E"/><text x="14" y="19" text-anchor="middle" font-size="12" fill="#fff" font-family="Inter,sans-serif" font-weight="700">K</text></svg></div>
       </div>
-      <div class="proof-stars">★★★★★</div>
-      <div class="proof-divider"></div>
-      <p class="proof-text"><strong>500+ players</strong> already inside</p>
+      <span class="stars">★★★★★</span>
+      <div class="proof-sep"></div>
+      <span class="proof-text"><b>500+ players</b> already inside</span>
     </div>
 
     <!-- Card -->
     <div class="card">
-      <div id="form-area">
+      <div class="card-top"></div>
 
+      <div id="form-area">
         <ul class="bullets">
           <li>
-            <div class="bullet-icon">
-              <svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2" stroke="#00D46E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
+            <div class="chk"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4 3,6.5 7,1.5" stroke="#22C55E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             The 6 Pillars that permanently rewire how you think under pressure
           </li>
           <li>
-            <div class="bullet-icon">
-              <svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2" stroke="#00D46E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-            Why fear is quietly costing you games — and exactly how to switch it off
+            <div class="chk"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4 3,6.5 7,1.5" stroke="#22C55E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            Why fear is quietly costing you games — and how to shut it off for good
           </li>
           <li>
-            <div class="bullet-icon">
-              <svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2" stroke="#00D46E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-            The daily 5-minute ritual elite players use to stay mentally locked in
+            <div class="chk"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4 3,6.5 7,1.5" stroke="#22C55E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            The daily 5-minute ritual elite players use to stay locked in
           </li>
           <li>
-            <div class="bullet-icon">
-              <svg viewBox="0 0 10 10" fill="none"><polyline points="1.5,5 4,7.5 8.5,2" stroke="#00D46E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-            How to perform at your best even when stakes are highest
+            <div class="chk"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4 3,6.5 7,1.5" stroke="#22C55E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            How to perform at your peak even when stakes are highest
           </li>
         </ul>
 
-        <div class="divider"></div>
+        <div class="rule"></div>
 
-        <span class="form-label">Get instant access →</span>
+        <div class="field">
+          <span class="field-icon"><svg viewBox="0 0 15 15" fill="none"><path d="M7.5 8a2.75 2.75 0 1 0 0-5.5A2.75 2.75 0 0 0 7.5 8zm-4.5 5c0-2.485 2.015-4.5 4.5-4.5s4.5 2.015 4.5 4.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
+          <input type="text" id="name" placeholder="First name" autocomplete="given-name" />
+        </div>
+        <div class="field">
+          <span class="field-icon"><svg viewBox="0 0 15 15" fill="none"><rect x="1" y="3" width="13" height="9" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M1 5.5l6.5 4 6.5-4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span>
+          <input type="email" id="email" placeholder="Email address" autocomplete="email" />
+        </div>
 
-        <form class="form-group" id="lead-form" novalidate>
-          <div class="input-wrap">
-            <span class="input-icon">
-              <svg viewBox="0 0 16 16" fill="none"><path d="M8 8.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 5c0-2.761 2.239-5 5-5s5 2.239 5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-            </span>
-            <input type="text" name="name" id="name" placeholder="Your first name" required autocomplete="given-name" />
-          </div>
-          <div class="input-wrap">
-            <span class="input-icon">
-              <svg viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.4"/><path d="M1 6l7 4.5L15 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-            </span>
-            <input type="email" name="email" id="email" placeholder="Your best email address" required autocomplete="email" />
-          </div>
-          <button type="submit" id="submit-btn">
-            <span id="btn-text">Send Me the Free Guide</span>
-            <span class="btn-arrow" id="btn-arrow">→</span>
-          </button>
-          <p class="disclaimer">
-            <svg viewBox="0 0 14 14" fill="none" width="12" height="12"><rect x="1" y="5" width="12" height="8" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M4 5V4a3 3 0 0 1 6 0v1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-            100% free. No spam. Unsubscribe anytime.
-          </p>
-        </form>
+        <button class="btn" id="submit-btn" type="button">
+          <span id="btn-label">Send Me the Free Guide</span>
+          <span class="btn-arr">→</span>
+        </button>
+
+        <p class="lock-note">
+          <svg viewBox="0 0 11 11" fill="none"><rect x="1" y="4.5" width="9" height="6" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M3.5 4.5V3.5a2 2 0 0 1 4 0v1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          100% free · No spam · Unsubscribe anytime
+        </p>
       </div>
 
       <!-- Success -->
       <div id="success">
-        <div class="success-icon">🎉</div>
+        <div class="success-ring">🎉</div>
         <h2>You're in!</h2>
-        <p>Your guide is ready. Click below to access it right now and start your journey.</p>
-        <a class="cta-link" href="https://mysoccerjourney.net/eliminatefear/6pillars/socialfunnel" target="_blank" rel="noopener">
-          Access Your Free Guide
-          <span>→</span>
+        <p>Your guide is ready. Click below to access it now and start your journey.</p>
+        <a class="success-btn" href="https://mysoccerjourney.net/eliminatefear/6pillars/socialfunnel" target="_blank" rel="noopener">
+          Access the Free Guide →
         </a>
       </div>
     </div>
 
     <!-- Testimonials -->
-    <div class="testi-section">
-      <div class="testi-label">
-        <div class="testi-label-line"></div>
+    <div class="testi-wrap">
+      <div class="section-label">
+        <div class="section-label-line"></div>
         <span>What players are saying</span>
-        <div class="testi-label-line"></div>
+        <div class="section-label-line"></div>
       </div>
 
-      <div class="testi-grid">
+      <div class="testi-list">
 
-        <!-- Featured / big testimonial -->
-        <div class="testi-card featured">
-          <div class="testi-quote-icon">"</div>
-          <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">
-            I used to freeze up every time the ball came to me in a big moment. I'd played for 8 years and still felt like a fraud on the field. After going through the 6 Pillars framework, something just <strong>clicked</strong>. Last weekend I scored the winning goal in our regional final and for the first time I actually enjoyed the pressure. This isn't just a guide — it changed the way I think about the game entirely.
+        <!-- Big featured -->
+        <div class="testi big">
+          <div class="testi-top">
+            <div class="t-stars">★★★★★</div>
+            <div class="t-quote">"</div>
+          </div>
+          <p class="testi-body">
+            I used to freeze every time the ball came to me in a big moment. Eight years of playing and I still felt like a fraud. After going through the 6 Pillars, something just <b>clicked</b>. Last weekend I scored the winning goal in our regional final — and for the first time I actually enjoyed the pressure. This isn't just a guide. It changed how I think about the game entirely.
           </p>
-          <div class="testi-footer">
-            <div class="testi-avatar">
-              <svg viewBox="0 0 34 34"><rect width="34" height="34" fill="#1D4ED8"/><text x="17" y="22" text-anchor="middle" font-size="15" fill="#fff" font-family="Inter,sans-serif" font-weight="700">M</text></svg>
-            </div>
-            <div class="testi-info">
-              <div class="testi-name">Marcus T.</div>
-              <div class="testi-meta">Midfielder · U19 Academy</div>
-            </div>
-            <div class="testi-verified">
-              <svg viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5.5" fill="#00D46E" fill-opacity="0.15" stroke="#00D46E" stroke-width="1"/><polyline points="3.5,6 5,7.8 8.5,4" stroke="#00D46E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="testi-foot">
+            <div class="t-av"><svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#1D4ED8"/><text x="16" y="21" text-anchor="middle" font-size="13" fill="#fff" font-family="Inter,sans-serif" font-weight="700">M</text></svg></div>
+            <div><div class="t-name">Marcus T.</div><div class="t-role">Midfielder · U19 Academy</div></div>
+            <div class="t-verified">
+              <svg viewBox="0 0 11 11" fill="none"><circle cx="5.5" cy="5.5" r="4.5" fill="rgba(34,197,94,0.12)" stroke="#22C55E" stroke-width="1"/><polyline points="3,5.5 4.8,7.2 8,3.5" stroke="#22C55E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
               Verified
             </div>
           </div>
         </div>
 
-        <!-- Row 2 -->
-        <div class="testi-card">
-          <div class="testi-quote-icon">"</div>
-          <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">
-            I was about to quit soccer. Coach kept telling me I had the technical skill but my <strong>mental game was holding me back</strong>. This framework gave me a structure I could actually use before and during games. Three months later I got called up to the first team.
+        <div class="testi">
+          <div class="testi-top">
+            <div class="t-stars">★★★★★</div>
+            <div class="t-quote">"</div>
+          </div>
+          <p class="testi-body">
+            I was about to quit soccer. My coach kept saying I had the skill but my <b>mental game was holding me back</b>. The framework gave me something concrete to use before and during games. Three months later I got called up to the first team.
           </p>
-          <div class="testi-footer">
-            <div class="testi-avatar">
-              <svg viewBox="0 0 34 34"><rect width="34" height="34" fill="#7C3AED"/><text x="17" y="22" text-anchor="middle" font-size="15" fill="#fff" font-family="Inter,sans-serif" font-weight="700">J</text></svg>
-            </div>
-            <div class="testi-info">
-              <div class="testi-name">Jordan K.</div>
-              <div class="testi-meta">Winger · Semi-Pro</div>
-            </div>
-            <div class="testi-verified">
-              <svg viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5.5" fill="#00D46E" fill-opacity="0.15" stroke="#00D46E" stroke-width="1"/><polyline points="3.5,6 5,7.8 8.5,4" stroke="#00D46E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Verified
-            </div>
+          <div class="testi-foot">
+            <div class="t-av"><svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#7C3AED"/><text x="16" y="21" text-anchor="middle" font-size="13" fill="#fff" font-family="Inter,sans-serif" font-weight="700">J</text></svg></div>
+            <div><div class="t-name">Jordan K.</div><div class="t-role">Winger · Semi-Pro</div></div>
+            <div class="t-verified"><svg viewBox="0 0 11 11" fill="none"><circle cx="5.5" cy="5.5" r="4.5" fill="rgba(34,197,94,0.12)" stroke="#22C55E" stroke-width="1"/><polyline points="3,5.5 4.8,7.2 8,3.5" stroke="#22C55E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Verified</div>
           </div>
         </div>
 
-        <div class="testi-card">
-          <div class="testi-quote-icon">"</div>
-          <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">
-            My daughter is 15 and was getting so anxious before every match she'd cry on the way to the game. We found MSJ and worked through the pillars together. She <strong>now walks onto the pitch with a completely different energy</strong>. Her coach noticed it within two weeks.
+        <div class="testi">
+          <div class="testi-top">
+            <div class="t-stars">★★★★★</div>
+            <div class="t-quote">"</div>
+          </div>
+          <p class="testi-body">
+            My daughter is 15 and was getting so anxious before games she'd cry on the way there. We worked through the pillars together and she <b>now walks onto the pitch with a completely different energy</b>. Her coach noticed within two weeks.
           </p>
-          <div class="testi-footer">
-            <div class="testi-avatar">
-              <svg viewBox="0 0 34 34"><rect width="34" height="34" fill="#BE123C"/><text x="17" y="22" text-anchor="middle" font-size="15" fill="#fff" font-family="Inter,sans-serif" font-weight="700">A</text></svg>
-            </div>
-            <div class="testi-info">
-              <div class="testi-name">Amanda R.</div>
-              <div class="testi-meta">Parent · Youth Player Mom</div>
-            </div>
-            <div class="testi-verified">
-              <svg viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5.5" fill="#00D46E" fill-opacity="0.15" stroke="#00D46E" stroke-width="1"/><polyline points="3.5,6 5,7.8 8.5,4" stroke="#00D46E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Verified
-            </div>
+          <div class="testi-foot">
+            <div class="t-av"><svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#BE123C"/><text x="16" y="21" text-anchor="middle" font-size="13" fill="#fff" font-family="Inter,sans-serif" font-weight="700">A</text></svg></div>
+            <div><div class="t-name">Amanda R.</div><div class="t-role">Parent · Youth Player Mom</div></div>
+            <div class="t-verified"><svg viewBox="0 0 11 11" fill="none"><circle cx="5.5" cy="5.5" r="4.5" fill="rgba(34,197,94,0.12)" stroke="#22C55E" stroke-width="1"/><polyline points="3,5.5 4.8,7.2 8,3.5" stroke="#22C55E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Verified</div>
           </div>
         </div>
 
-        <div class="testi-card">
-          <div class="testi-quote-icon">"</div>
-          <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">
-            I've bought courses, read books, tried everything. This is the <strong>only thing that actually worked</strong>. It's free, it's direct, and it's the real deal. The daily ritual alone was worth it — I use it before every single game now.
+        <div class="testi">
+          <div class="testi-top">
+            <div class="t-stars">★★★★★</div>
+            <div class="t-quote">"</div>
+          </div>
+          <p class="testi-body">
+            I've bought courses, read books, tried it all. This is the <b>only thing that actually worked</b>. It's free, it's straight to the point, and it's real. The daily ritual alone changed everything — I do it before every single game.
           </p>
-          <div class="testi-footer">
-            <div class="testi-avatar">
-              <svg viewBox="0 0 34 34"><rect width="34" height="34" fill="#065F46"/><text x="17" y="22" text-anchor="middle" font-size="15" fill="#fff" font-family="Inter,sans-serif" font-weight="700">R</text></svg>
-            </div>
-            <div class="testi-info">
-              <div class="testi-name">Ryan O.</div>
-              <div class="testi-meta">Striker · College Team</div>
-            </div>
-            <div class="testi-verified">
-              <svg viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5.5" fill="#00D46E" fill-opacity="0.15" stroke="#00D46E" stroke-width="1"/><polyline points="3.5,6 5,7.8 8.5,4" stroke="#00D46E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Verified
-            </div>
+          <div class="testi-foot">
+            <div class="t-av"><svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#065F46"/><text x="16" y="21" text-anchor="middle" font-size="13" fill="#fff" font-family="Inter,sans-serif" font-weight="700">R</text></svg></div>
+            <div><div class="t-name">Ryan O.</div><div class="t-role">Striker · College Team</div></div>
+            <div class="t-verified"><svg viewBox="0 0 11 11" fill="none"><circle cx="5.5" cy="5.5" r="4.5" fill="rgba(34,197,94,0.12)" stroke="#22C55E" stroke-width="1"/><polyline points="3,5.5 4.8,7.2 8,3.5" stroke="#22C55E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Verified</div>
           </div>
         </div>
 
-        <div class="testi-card">
-          <div class="testi-quote-icon">"</div>
-          <div class="testi-stars">★★★★★</div>
-          <p class="testi-text">
-            Honestly thought "mindset" stuff was just fluff. Watched one video, clicked the link, read the guide in 20 minutes. <strong>Changed the way I prepare completely.</strong> I'm calmer, I'm sharper, and my numbers this season prove it.
+        <div class="testi">
+          <div class="testi-top">
+            <div class="t-stars">★★★★★</div>
+            <div class="t-quote">"</div>
+          </div>
+          <p class="testi-body">
+            Thought mindset content was just fluff. One video, clicked the link, read it in 20 minutes. <b>Changed how I prepare completely.</b> Calmer, sharper — my stats this season say it all.
           </p>
-          <div class="testi-footer">
-            <div class="testi-avatar">
-              <svg viewBox="0 0 34 34"><rect width="34" height="34" fill="#92400E"/><text x="17" y="22" text-anchor="middle" font-size="15" fill="#fff" font-family="Inter,sans-serif" font-weight="700">K</text></svg>
-            </div>
-            <div class="testi-info">
-              <div class="testi-name">Kai N.</div>
-              <div class="testi-meta">Goalkeeper · Regional League</div>
-            </div>
-            <div class="testi-verified">
-              <svg viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5.5" fill="#00D46E" fill-opacity="0.15" stroke="#00D46E" stroke-width="1"/><polyline points="3.5,6 5,7.8 8.5,4" stroke="#00D46E" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              Verified
-            </div>
+          <div class="testi-foot">
+            <div class="t-av"><svg viewBox="0 0 32 32"><rect width="32" height="32" fill="#92400E"/><text x="16" y="21" text-anchor="middle" font-size="13" fill="#fff" font-family="Inter,sans-serif" font-weight="700">K</text></svg></div>
+            <div><div class="t-name">Kai N.</div><div class="t-role">Goalkeeper · Regional League</div></div>
+            <div class="t-verified"><svg viewBox="0 0 11 11" fill="none"><circle cx="5.5" cy="5.5" r="4.5" fill="rgba(34,197,94,0.12)" stroke="#22C55E" stroke-width="1"/><polyline points="3,5.5 4.8,7.2 8,3.5" stroke="#22C55E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>Verified</div>
           </div>
         </div>
 
@@ -783,126 +631,93 @@
 
     <footer>
       <span>© 2025 My Soccer Journey</span>
-      <span class="sep"></span>
+      <span class="fdot"></span>
       <a href="#">Privacy</a>
-      <span class="sep"></span>
+      <span class="fdot"></span>
       <a href="#">Terms</a>
     </footer>
+
   </div>
 
   <script>
-    /* ── Typewriter ── */
-    const phrases = [
-      ["Stop Playing Scared.", "Start Playing Free."],
-      ["Stop Holding Back.", "Play With Full Confidence."],
-      ["Stop Living in Your Head.", "Start Owning the Field."],
-      ["Stop Doubting Yourself.", "Start Trusting Your Game."],
-      ["Stop Playing Small.", "Step Into Your Potential."],
-      ["Stop Letting Fear Win.", "Play the Way You Know You Can."],
-      ["Stop Overthinking.", "Start Performing."],
-      ["Stop Surviving Games.", "Start Dominating Them."],
-      ["Stop Waiting for Permission.", "Go Take What's Yours."],
-      ["Stop Playing Tense.", "Start Playing Free."],
+    /* ── Typewriter — static "Stop Playing", animated second line ── */
+    const words = [
+      "Scared.",
+      "Tense.",
+      "Small.",
+      "Safe.",
+      "Scared to Fail.",
+      "in Your Head.",
+      "With Doubt.",
+      "Tense and Tight.",
+      "Afraid of the Moment.",
+      "Like a Backup.",
     ];
 
-    const el = document.getElementById('typed-text');
+    const el    = document.getElementById('hl-typed');
+    let index   = 0;
 
-    // Build two spans + cursor
-    const span1 = document.createElement('span');
-    span1.className = 'line1';
-    const span2 = document.createElement('span');
-    span2.className = 'line2';
-    const cursor = document.createElement('span');
-    cursor.className = 'cursor';
+    const TYPE   = 55;
+    const DELETE = 32;
+    const HOLD   = 2400;
+    const GAP    = 300;
 
-    el.appendChild(span1);
-    el.appendChild(span2);
-    el.appendChild(cursor);
+    const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-    let phraseIndex = 0;
-
-    const TYPE_SPEED   = 48;   // ms per character typed
-    const DELETE_SPEED = 28;   // ms per character deleted
-    const PAUSE_AFTER  = 2600; // ms to display before deleting
-    const PAUSE_START  = 300;  // ms pause before typing next phrase
-
-    function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-
-    async function type(spanEl, text) {
-      for (let i = 0; i <= text.length; i++) {
-        spanEl.textContent = text.slice(0, i);
-        await sleep(TYPE_SPEED + (Math.random() * 20 - 10));
+    async function typeWord(word) {
+      for (let i = 1; i <= word.length; i++) {
+        el.textContent = word.slice(0, i);
+        await sleep(TYPE + (Math.random() * 18 - 9));
       }
     }
 
-    async function erase(spanEl) {
-      const text = spanEl.textContent;
-      for (let i = text.length; i >= 0; i--) {
-        spanEl.textContent = text.slice(0, i);
-        await sleep(DELETE_SPEED + (Math.random() * 10 - 5));
+    async function deleteWord() {
+      const word = el.textContent;
+      for (let i = word.length - 1; i >= 0; i--) {
+        el.textContent = word.slice(0, i);
+        await sleep(DELETE + (Math.random() * 10 - 5));
       }
     }
 
-    async function run() {
+    async function loop() {
       while (true) {
-        const [line1, line2] = phrases[phraseIndex % phrases.length];
-        phraseIndex++;
-
-        // Type line 1
-        await type(span1, line1);
-        await sleep(120);
-        // Type line 2
-        await type(span2, line2);
-
-        await sleep(PAUSE_AFTER);
-
-        // Erase line 2 first
-        await erase(span2);
-        await sleep(80);
-        // Erase line 1
-        await erase(span1);
-
-        await sleep(PAUSE_START);
+        await typeWord(words[index % words.length]);
+        await sleep(HOLD);
+        await deleteWord();
+        await sleep(GAP);
+        index++;
       }
     }
 
-    run();
+    loop();
 
     /* ── Form submit ── */
-    const form       = document.getElementById('lead-form');
-    const formArea   = document.getElementById('form-area');
-    const success    = document.getElementById('success');
-    const submitBtn  = document.getElementById('submit-btn');
-    const btnText    = document.getElementById('btn-text');
-    const btnArrow   = document.getElementById('btn-arrow');
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
+    document.getElementById('submit-btn').addEventListener('click', async () => {
       const name  = document.getElementById('name').value.trim();
       const email = document.getElementById('email').value.trim();
       if (!name || !email) return;
 
-      submitBtn.disabled = true;
-      btnText.textContent = 'Sending…';
-      btnArrow.textContent = '';
+      const btn = document.getElementById('submit-btn');
+      btn.disabled = true;
+      document.getElementById('btn-label').textContent = 'Sending…';
 
-      // Replace YOUR_FORM_ID with your Formspree ID — free at formspree.io
-      const FORMSPREE_URL = 'https://formspree.io/f/YOUR_FORM_ID';
+      // Replace YOUR_FORM_ID — sign up free at formspree.io
+      const URL = 'https://formspree.io/f/YOUR_FORM_ID';
 
       try {
-        const res = await fetch(FORMSPREE_URL, {
+        const r = await fetch(URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify({ name, email, _subject: 'New MSJ Lead 🎉' }),
+          body: JSON.stringify({ name, email, _subject: 'New MSJ Lead' }),
         });
-        if (res.ok || FORMSPREE_URL.includes('YOUR_FORM_ID')) showSuccess();
-        else throw new Error();
-      } catch { showSuccess(); }
+        if (r.ok || URL.includes('YOUR_FORM_ID')) show();
+        else throw 0;
+      } catch { show(); }
     });
 
-    function showSuccess() {
-      formArea.style.display = 'none';
-      success.style.display  = 'block';
+    function show() {
+      document.getElementById('form-area').style.display = 'none';
+      document.getElementById('success').style.display   = 'block';
     }
   </script>
 </body>
