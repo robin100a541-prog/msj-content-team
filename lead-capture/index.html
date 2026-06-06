@@ -392,11 +392,24 @@
       if(!name||!em)return;
       var b=document.getElementById("submit");b.disabled=true;
       document.getElementById("cta-label").textContent="Sending\u2026";document.getElementById("arr").textContent="";
-      /* Replace YOUR_FORM_ID \u2014 free at formspree.io */
-      var URL="https://formspree.io/f/YOUR_FORM_ID";
-      try{var r=await fetch(URL,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},
-        body:JSON.stringify({name:name,email:em,_subject:"New MSJ Lead"})});
-        if(r.ok||URL.indexOf("YOUR_FORM_ID")>-1)done();else throw 0;}catch(e){done();}
+      /* ===== GoHighLevel Inbound Webhook =====
+         SETUP (one time):
+           1. GHL > Automation > Workflows > Create Workflow
+           2. Add trigger: "Inbound Webhook" -> copy the webhook URL
+           3. Paste that URL below as GHL_WEBHOOK_URL
+           4. Add action "Create/Update Contact" and map the fields:
+              first_name, email   (add phone too if you add that input)
+           5. Add action "Send Email" with the guide link, etc.
+         no-cors + urlencoded delivers the lead from any host with
+         zero CORS problems (GHL parses the fields automatically). */
+      var GHL_WEBHOOK_URL="https://services.leadconnectorhq.com/hooks/YOUR_LOCATION_ID/webhook-trigger/YOUR_WEBHOOK_ID";
+      var payload={first_name:name,full_name:name,email:em,source:"MSJ Free Guide Page"};
+      try{
+        await fetch(GHL_WEBHOOK_URL,{method:"POST",mode:"no-cors",
+          headers:{"Content-Type":"application/x-www-form-urlencoded"},
+          body:new URLSearchParams(payload).toString()});
+      }catch(e){}
+      done();
     });
     function done(){
       document.getElementById("form-area").style.display="none";
