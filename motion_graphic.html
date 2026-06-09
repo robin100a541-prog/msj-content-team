@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Motion Graphic – Toppar & Dalar</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: transparent;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    font-family: 'Arial Black', 'Impact', sans-serif;
+  }
+  canvas {
+    position: absolute;
+    top: 0; left: 0;
+    width: 1920px;
+    height: 1080px;
+  }
+  #textLayer {
+    position: absolute;
+    top: 0; left: 0;
+    width: 1920px;
+    height: 1080px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+  }
+  .line-wrap {
+    overflow: hidden;
+    margin: 6px 0;
+  }
+  .text-line {
+    font-size: 88px;
+    font-weight: 900;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    transform: translateY(110%);
+    opacity: 0;
+    display: block;
+    text-shadow:
+      0 0 40px rgba(255,255,255,0.9),
+      0 0 80px rgba(180,220,255,0.5),
+      3px 3px 0px rgba(0,0,0,0.8);
+    filter: drop-shadow(0 0 20px rgba(100,180,255,0.6));
+  }
+  .text-line.small {
+    font-size: 52px;
+    letter-spacing: 0.18em;
+    color: #c8e8ff;
+    text-shadow:
+      0 0 30px rgba(200,232,255,0.9),
+      0 0 60px rgba(100,180,255,0.5),
+      2px 2px 0px rgba(0,0,0,0.8);
+  }
+  .accent-line {
+    font-size: 36px;
+    font-weight: 400;
+    color: rgba(200,220,255,0.7);
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    transform: translateY(110%);
+    opacity: 0;
+    display: block;
+    font-style: italic;
+  }
+
+  /* Hyperframe ghost layers */
+  .hyper {
+    position: absolute;
+    top: 0; left: 0;
+    width: 1920px;
+    height: 1080px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    opacity: 0;
+  }
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<canvas id="particles"></canvas>
+
+<!-- Hyperframe ghost layers -->
+<div class="hyper" id="h1" style="transform:translate(-8px,-4px) skewX(-0.5deg);">
+  <div class="line-wrap"><span class="text-line" id="gh1a">DET KOMMER FINNAS</span></div>
+  <div class="line-wrap"><span class="text-line" id="gh1b">TOPPAR &amp; DALAR</span></div>
+</div>
+<div class="hyper" id="h2" style="transform:translate(6px,3px) skewX(0.4deg);">
+  <div class="line-wrap"><span class="text-line" id="gh2a">DET KOMMER FINNAS</span></div>
+  <div class="line-wrap"><span class="text-line" id="gh2b">TOPPAR &amp; DALAR</span></div>
+</div>
+
+<!-- Main text -->
+<div id="textLayer">
+  <div class="line-wrap"><span class="accent-line" id="t0">— inte bara —</span></div>
+  <div class="line-wrap"><span class="text-line" id="t1">DET KOMMER FINNAS</span></div>
+  <div class="line-wrap"><span class="text-line" id="t2">TOPPAR &amp; DALAR</span></div>
+  <div class="line-wrap" style="margin-top:20px;"><span class="text-line small" id="t3">INTE BARA REGNBÅGAR</span></div>
+  <div class="line-wrap"><span class="text-line small" id="t4">OCH SOLSTRÅLAR</span></div>
+</div>
+
+<script>
+// ─── UTILITY ───────────────────────────────────────────────────────────────
+const lerp = (a,b,t) => a + (b-a)*t;
+const easeOut = t => 1 - Math.pow(1-t,3);
+const easeInOut = t => t < 0.5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2;
+const clamp = (v,a,b) => Math.max(a,Math.min(b,v));
+
+// ─── CANVAS BG ─────────────────────────────────────────────────────────────
+const bgCanvas = document.getElementById('bg');
+const ctx = bgCanvas.getContext('2d');
+bgCanvas.width = 1920; bgCanvas.height = 1080;
+
+// ─── PARTICLE CANVAS ───────────────────────────────────────────────────────
+const pCanvas = document.getElementById('particles');
+const pCtx = pCanvas.getContext('2d');
+pCanvas.width = 1920; pCanvas.height = 1080;
+
+// ─── MOUNTAIN / WAVE DATA ──────────────────────────────────────────────────
+let time = 0;
+const totalDuration = 7000; // ms
+let startTime = null;
+
+// Peak/valley wave points
+function buildWavePath(ctx, yBase, amp, freq, offset, waveTime) {
+  ctx.beginPath();
+  ctx.moveTo(0, 1080);
+  for (let x = 0; x <= 1920; x += 4) {
+    const nx = x / 1920;
+    const y = yBase
+      - amp * Math.pow(Math.sin(nx * Math.PI * freq + offset + waveTime * 0.8), 2) * 0.7
+      - amp * 0.3 * Math.sin(nx * Math.PI * freq * 2.3 + waveTime * 1.2 + 1)
+      - amp * 0.15 * Math.cos(nx * Math.PI * freq * 4.1 + waveTime * 0.5 + 2.5);
+    ctx.lineTo(x, y);
+  }
+  ctx.lineTo(1920, 1080);
+  ctx.closePath();
+}
+
+// Particles
+const particles = [];
+for (let i = 0; i < 180; i++) {
+  particles.push({
+    x: Math.random() * 1920,
+    y: Math.random() * 1080,
+    vx: (Math.random() - 0.5) * 0.6,
+    vy: -Math.random() * 1.2 - 0.3,
+    r: Math.random() * 3 + 0.5,
+    alpha: Math.random() * 0.7 + 0.2,
+    col: Math.random() < 0.5 ? `rgba(180,220,255,` : `rgba(255,255,255,`,
+    twinkle: Math.random() * Math.PI * 2,
+    twinkleSpeed: Math.random() * 0.05 + 0.01,
+    life: Math.random()
+  });
+}
+
+// Rainbow shards (to break apart)
+const shards = [];
+const rainbowCols = ['#ff6b6b','#ffa94d','#ffe066','#69db7c','#38d9a9','#74c0fc','#9775fa','#f783ac'];
+for (let i = 0; i < 40; i++) {
+  const col = rainbowCols[i % rainbowCols.length];
+  shards.push({
+    x: 800 + Math.random() * 320,
+    y: 300 + Math.random() * 200,
+    vx: (Math.random() - 0.5) * 8,
+    vy: (Math.random() - 0.5) * 8 - 2,
+    rot: Math.random() * Math.PI * 2,
+    rotV: (Math.random() - 0.5) * 0.15,
+    w: 30 + Math.random() * 60,
+    h: 8 + Math.random() * 16,
+    col,
+    alpha: 0,
+    born: 600 + Math.random() * 400
+  });
+}
+
+// ─── TEXT ANIMATION ────────────────────────────────────────────────────────
+function animateEl(el, delay) {
+  setTimeout(() => {
+    el.style.transition = 'transform 0.75s cubic-bezier(0.16,1,0.3,1), opacity 0.4s ease';
+    el.style.transform = 'translateY(0%)';
+    el.style.opacity = '1';
+  }, delay);
+}
+
+function animateElOut(el, delay) {
+  setTimeout(() => {
+    el.style.transition = 'transform 0.5s cubic-bezier(0.7,0,1,1), opacity 0.4s ease';
+    el.style.transform = 'translateY(-110%)';
+    el.style.opacity = '0';
+  }, delay);
+}
+
+// Ghost hyperframes
+function animateGhost(ghostDiv, ghostLines, delay, dur) {
+  setTimeout(() => {
+    // Show ghosts with RGB split color
+    ghostDiv.style.transition = 'opacity 0.15s';
+    ghostDiv.style.opacity = '0.18';
+    ghostLines.forEach(l => {
+      if (l) { l.style.transform='translateY(0%)'; l.style.opacity='1'; }
+    });
+    setTimeout(() => { ghostDiv.style.opacity = '0'; }, dur);
+  }, delay);
+}
+
+// ─── SCHEDULE ANIMATIONS ───────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  // Phase 1: wave builds, shards form
+  // Phase 2: text slams in
+  animateEl(document.getElementById('t1'), 600);
+  animateEl(document.getElementById('t2'), 850);
+
+  // Hyperframe flashes
+  const h1 = document.getElementById('h1');
+  const h2 = document.getElementById('h2');
+  const gh1a = document.getElementById('gh1a');
+  const gh1b = document.getElementById('gh1b');
+  const gh2a = document.getElementById('gh2a');
+  const gh2b = document.getElementById('gh2b');
+  [gh1a,gh1b,gh2a,gh2b].forEach(e=>{ if(e){e.style.transform='translateY(0%)';e.style.opacity='1';} });
+
+  animateGhost(h1, [gh1a,gh1b], 600, 120);
+  animateGhost(h2, [gh2a,gh2b], 720, 100);
+  animateGhost(h1, [gh1a,gh1b], 860, 100);
+
+  // Phase 3: rainbow text fades in then shatters
+  animateEl(document.getElementById('t3'), 1400);
+  animateEl(document.getElementById('t4'), 1650);
+  animateEl(document.getElementById('t0'), 1200);
+
+  // Phase 4: rainbow text shatters out, peaks remain
+  animateElOut(document.getElementById('t3'), 3800);
+  animateElOut(document.getElementById('t4'), 3950);
+  animateElOut(document.getElementById('t0'), 3600);
+
+  // Hyperframe second burst on shatter
+  animateGhost(h1, [gh1a,gh1b], 3800, 80);
+  animateGhost(h2, [gh2a,gh2b], 3860, 80);
+  animateGhost(h1, [gh1a,gh1b], 3920, 60);
+});
+
+// ─── MAIN RENDER LOOP ──────────────────────────────────────────────────────
+function render(ts) {
+  if (!startTime) startTime = ts;
+  const elapsed = ts - startTime;
+  const t = elapsed / 1000; // seconds
+
+  // ── BG CANVAS ────────────────────────────────────────────────────────────
+  ctx.clearRect(0, 0, 1920, 1080);
+
+  // Dark vignette base (for visibility without bg)
+  const vign = ctx.createRadialGradient(960,540,200,960,540,960);
+  vign.addColorStop(0, 'rgba(0,0,0,0)');
+  vign.addColorStop(1, 'rgba(0,0,0,0.65)');
+  ctx.fillStyle = vign;
+  ctx.fillRect(0,0,1920,1080);
+
+  // Cinematic bars
+  ctx.fillStyle = 'rgba(0,0,0,0.92)';
+  ctx.fillRect(0, 0, 1920, 90);
+  ctx.fillRect(0, 990, 1920, 90);
+
+  // ── RAINBOW SHARDS ───────────────────────────────────────────────────────
+  const shardReveal = clamp((t - 0.3) / 1.5, 0, 1);
+  const shardBreak  = clamp((t - 3.5) / 1.0, 0, 1);
+
+  shards.forEach((s, i) => {
+    const localT = clamp((elapsed - s.born) / 600, 0, 1);
+    if (localT <= 0) return;
+    s.alpha = localT * (1 - shardBreak * shardBreak);
+
+    if (shardBreak > 0) {
+      s.x += s.vx * shardBreak * 3;
+      s.y += s.vy * shardBreak * 3 + shardBreak * 2;
+      s.rot += s.rotV * shardBreak * 4;
+    }
+
+    ctx.save();
+    ctx.globalAlpha = s.alpha * 0.7;
+    ctx.translate(s.x, s.y);
+    ctx.rotate(s.rot);
+    ctx.fillStyle = s.col;
+    ctx.shadowColor = s.col;
+    ctx.shadowBlur = 20;
+    ctx.fillRect(-s.w/2, -s.h/2, s.w, s.h);
+    ctx.restore();
+  });
+
+  // ── MOUNTAIN WAVES ───────────────────────────────────────────────────────
+  const waveReveal = clamp(t / 1.2, 0, 1);
+  const waveEase = easeOut(waveReveal);
+
+  // Back mountain (cold blue)
+  const g1 = ctx.createLinearGradient(0, 400, 0, 1080);
+  g1.addColorStop(0, `rgba(20,60,120,${0.55 * waveEase})`);
+  g1.addColorStop(1, `rgba(5,15,40,${0.0})`);
+  ctx.fillStyle = g1;
+  buildWavePath(ctx, 680 - waveEase * 80, 260, 2.8, 0.2, t * 0.15);
+  ctx.fill();
+
+  // Mid mountain (steel blue)
+  const g2 = ctx.createLinearGradient(0, 500, 0, 1080);
+  g2.addColorStop(0, `rgba(40,90,160,${0.65 * waveEase})`);
+  g2.addColorStop(1, `rgba(10,20,60,${0.0})`);
+  ctx.fillStyle = g2;
+  buildWavePath(ctx, 760 - waveEase * 60, 200, 3.5, 1.1, t * 0.22);
+  ctx.fill();
+
+  // Front mountain ridge (bright edge)
+  const g3 = ctx.createLinearGradient(0, 580, 0, 1080);
+  g3.addColorStop(0, `rgba(80,160,255,${0.45 * waveEase})`);
+  g3.addColorStop(0.15, `rgba(20,50,110,${0.6 * waveEase})`);
+  g3.addColorStop(1, `rgba(0,5,20,${0.0})`);
+  ctx.fillStyle = g3;
+  buildWavePath(ctx, 840 - waveEase * 40, 160, 4.2, 2.3, t * 0.3);
+  ctx.fill();
+
+  // Ridge glow line
+  ctx.save();
+  ctx.globalAlpha = 0.7 * waveEase;
+  ctx.strokeStyle = 'rgba(120,200,255,0.9)';
+  ctx.lineWidth = 2.5;
+  ctx.shadowColor = 'rgba(100,180,255,1)';
+  ctx.shadowBlur = 18;
+  ctx.beginPath();
+  for (let x = 0; x <= 1920; x += 4) {
+    const nx = x / 1920;
+    const y = (840 - waveEase * 40)
+      - 160 * Math.pow(Math.sin(nx * Math.PI * 4.2 + 2.3 + t * 0.3), 2) * 0.7
+      - 160 * 0.3 * Math.sin(nx * Math.PI * 4.2 * 2.3 + t * 1.2 * 0.3 + 1 + 2.3)
+      - 160 * 0.15 * Math.cos(nx * Math.PI * 4.2 * 4.1 + t * 0.5 * 0.3 + 2.5 + 2.3);
+    if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+  ctx.restore();
+
+  // ── HORIZONTAL SCAN LINES (cinematic) ────────────────────────────────────
+  ctx.save();
+  ctx.globalAlpha = 0.04;
+  for (let y = 0; y < 1080; y += 4) {
+    ctx.fillStyle = y % 8 === 0 ? 'rgba(0,0,0,1)' : 'rgba(255,255,255,0.5)';
+    ctx.fillRect(0, y, 1920, 2);
+  }
+  ctx.restore();
+
+  // ── LENS FLARE / LIGHT STREAK ────────────────────────────────────────────
+  const flareT = clamp((t - 0.4) / 0.6, 0, 1);
+  if (flareT > 0) {
+    ctx.save();
+    ctx.globalAlpha = 0.35 * easeOut(flareT) * (1 - clamp((t-5)/1,0,1));
+    const fl = ctx.createRadialGradient(1400, 200, 0, 1400, 200, 500);
+    fl.addColorStop(0, 'rgba(255,255,255,0.9)');
+    fl.addColorStop(0.2, 'rgba(180,220,255,0.4)');
+    fl.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = fl;
+    ctx.fillRect(0,0,1920,1080);
+
+    // streak
+    ctx.globalAlpha = 0.15 * easeOut(flareT) * (1 - clamp((t-5)/1,0,1));
+    ctx.strokeStyle = 'rgba(200,230,255,1)';
+    ctx.lineWidth = 1.5;
+    ctx.shadowColor = 'rgba(180,220,255,1)';
+    ctx.shadowBlur = 30;
+    ctx.beginPath();
+    ctx.moveTo(1400, 200); ctx.lineTo(200, 900);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // ─── PARTICLE CANVAS ─────────────────────────────────────────────────────
+  pCtx.clearRect(0,0,1920,1080);
+  particles.forEach(p => {
+    p.x += p.vx;
+    p.y += p.vy;
+    p.twinkle += p.twinkleSpeed;
+    p.life += 0.002;
+    if (p.y < -10) { p.y = 1090; p.x = Math.random()*1920; }
+    const flicker = 0.5 + 0.5 * Math.sin(p.twinkle);
+    pCtx.beginPath();
+    pCtx.arc(p.x, p.y, p.r * flicker, 0, Math.PI*2);
+    pCtx.fillStyle = p.col + (p.alpha * flicker * waveEase) + ')';
+    pCtx.fill();
+  });
+
+  // ── HYPERFRAME FLASH (canvas level glitch) ───────────────────────────────
+  // Quick RGB offset burst at t≈0.6 and t≈3.8
+  const bust1 = clamp((t-0.58)/0.05,0,1) * (1-clamp((t-0.65)/0.05,0,1));
+  const bust2 = clamp((t-3.80)/0.04,0,1) * (1-clamp((t-3.86)/0.04,0,1));
+  const bustAmt = Math.max(bust1, bust2);
+  if (bustAmt > 0.02) {
+    ctx.save();
+    ctx.globalAlpha = bustAmt * 0.25;
+    ctx.globalCompositeOperation = 'screen';
+    ctx.fillStyle = 'rgba(255,0,80,1)';
+    ctx.fillRect(8 * bustAmt, 0, 1920, 1080);
+    ctx.fillStyle = 'rgba(0,180,255,1)';
+    ctx.fillRect(-8 * bustAmt, 0, 1920, 1080);
+    ctx.restore();
+  }
+
+  requestAnimationFrame(render);
+}
+
+requestAnimationFrame(render);
+</script>
+</body>
+</html>
