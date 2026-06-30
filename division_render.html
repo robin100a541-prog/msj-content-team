@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { background: transparent; width:1920px; height:1080px; overflow:hidden; }
+  #stage {
+    position:absolute; inset:0; display:flex;
+    align-items:flex-start; justify-content:center; padding-top:90px;
+  }
+  #card {
+    position:relative; display:inline-flex; align-items:center;
+    gap:26px; padding:22px 46px;
+  }
+  #baseline {
+    position:absolute; left:50%; bottom:-6px; height:3px; width:0%;
+    transform:translateX(-50%);
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,0.95),transparent);
+    box-shadow:0 0 18px rgba(255,255,255,0.7);
+  }
+  .label {
+    font-family:'Arial Narrow',sans-serif; font-weight:700; font-size:54px;
+    letter-spacing:0.16em; text-transform:uppercase; color:rgba(255,255,255,0.94);
+    text-shadow:0 2px 10px rgba(0,0,0,0.55),0 0 26px rgba(255,255,255,0.18);
+    white-space:nowrap;
+  }
+  .label .accent {
+    display:inline-block; width:8px; height:8px; border-radius:50%;
+    background:#fff; margin-right:16px;
+    box-shadow:0 0 12px 2px rgba(255,255,255,0.9); vertical-align:middle;
+  }
+  #numberWindow {
+    position:relative; height:110px; width:130px; overflow:hidden;
+    -webkit-mask-image:linear-gradient(180deg,transparent,black 18%,black 82%,transparent);
+    mask-image:linear-gradient(180deg,transparent,black 18%,black 82%,transparent);
+  }
+  #reel { position:absolute; left:0; top:0; width:100%; display:flex; flex-direction:column; align-items:center; }
+  .digit {
+    height:110px; line-height:110px; font-family:'Arial Narrow',sans-serif;
+    font-weight:700; font-size:96px; color:#fff; text-align:center;
+    text-shadow:0 4px 18px rgba(0,0,0,0.6),0 0 34px rgba(255,255,255,0.35);
+  }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="card">
+    <div class="label"><span class="accent"></span>DIVISION</div>
+    <div id="numberWindow"><div id="reel"></div></div>
+    <div id="baseline"></div>
+  </div>
+</div>
+<script>
+const SEQUENCE = [7, 8, 6, 5];
+const DIGIT_H = 110;
+const reel = document.getElementById('reel');
+const card = document.getElementById('card');
+const baseline = document.getElementById('baseline');
+SEQUENCE.forEach(v => { const d=document.createElement('div'); d.className='digit'; d.textContent=v; reel.appendChild(d); });
+
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const easeOutExpo=t=>t>=1?1:1-Math.pow(2,-10*t);
+const easeOutCubic=t=>1-Math.pow(1-t,3);
+function easeOutBack(t){const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(t-1,3)+c1*Math.pow(t-1,2);}
+const seg=(t,a,b)=>clamp((t-a)/(b-a),0,1);
+
+// Reel keyframes: [startMs, endMs, fromIndex, toIndex, easing]
+const MOVES = [
+  [400, 900, -0.6, 0, easeOutBack],   // slide in to "7"
+  [1600,1900, 0,   1, easeOutExpo],   // -> 8
+  [2500,2800, 1,   2, easeOutExpo],   // -> 6
+  [3400,3800, 2,   3, easeOutBack],   // -> 5 (final settle)
+];
+
+window.seek = function(t) {
+  // Card intro
+  const ci = seg(t, 200, 750);
+  const ce = easeOutCubic(ci);
+  card.style.opacity = ce.toFixed(4);
+  card.style.transform = `translateY(${(-22*(1-ce)).toFixed(2)}px)`;
+  // Baseline grow
+  baseline.style.width = (92 * easeOutCubic(seg(t,200,900))).toFixed(2) + '%';
+  // Reel position
+  let idx = MOVES[0][2];
+  for (const [a,b,from,to,ease] of MOVES) {
+    if (t >= b) idx = to;
+    else if (t >= a) { idx = from + (to-from)*ease(seg(t,a,b)); break; }
+    else break;
+  }
+  reel.style.transform = `translateY(${(-idx*DIGIT_H).toFixed(3)}px)`;
+};
+window.seek(0);
+window.__ready = true;
+</script>
+</body>
+</html>
