@@ -54,7 +54,7 @@
   .glow-ring.gold{width:260px;height:260px;background:radial-gradient(circle,rgba(245,197,24,.28) 0%,transparent 70%);animation:pulseGlow 4s ease-in-out infinite;}
   .glow-ring.navy{width:190px;height:190px;background:radial-gradient(circle,rgba(42,63,143,.36) 0%,transparent 70%);animation:pulseGlow 4s ease-in-out infinite 1s;}
   .logo-float{position:relative;animation:floatY 4.5s ease-in-out infinite;}
-  .logo-float img{width:140px;height:140px;border-radius:50%;border:2px solid rgba(255,255,255,.15);box-shadow:0 0 30px rgba(245,197,24,.4);display:block;background:#0A0A0A;}
+  .logo-float img{width:140px;height:140px;border-radius:50%;border:2px solid rgba(255,255,255,.15);box-shadow:0 0 30px rgba(245,197,24,.4);display:block;background:#0A0A0A;object-fit:cover;}
 
   .badge{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:999px;border:1px solid rgba(245,197,24,.4);
     background:rgba(245,197,24,.16);color:var(--primary);font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:28px;}
@@ -128,7 +128,10 @@
       <div class="glow-ring gold"></div>
       <div class="glow-ring navy"></div>
       <div class="logo-float">
-        <img src="assets/msj-logo.svg" alt="My Soccer Journey" width="140" height="140">
+        <picture>
+          <source srcset="assets/msj-logo.webp" type="image/webp">
+          <img src="assets/msj-logo.png" alt="My Soccer Journey" width="140" height="140">
+        </picture>
       </div>
     </div>
 
