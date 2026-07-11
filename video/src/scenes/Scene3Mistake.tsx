@@ -6,7 +6,7 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { GlowText } from "../components/GlowText";
+import { InkText } from "../components/InkText";
 
 export const Scene3Mistake: React.FC<{ durationInFrames: number }> = ({
   durationInFrames,
@@ -27,20 +27,31 @@ export const Scene3Mistake: React.FC<{ durationInFrames: number }> = ({
     [0, 1, 1, 0],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
   );
+  const trackIn = interpolate(frame, [0, 20], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const kenBurns = interpolate(frame, [0, durationInFrames], [1.03, 1]);
 
   return (
-    <AbsoluteFill style={{ justifyContent: "center", alignItems: "center" }}>
-      <GlowText
+    <AbsoluteFill
+      style={{
+        justifyContent: "center",
+        alignItems: "center",
+        transform: `scale(${kenBurns})`,
+      }}
+    >
+      <InkText
         fontSize={70}
         opacity={opacity}
         scale={scale}
         bassScale={0.025}
-        bassGlow={20}
+        trackIn={trackIn}
       >
         And they all made
         <br />
         the same mistake.
-      </GlowText>
+      </InkText>
     </AbsoluteFill>
   );
 };

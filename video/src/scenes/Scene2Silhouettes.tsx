@@ -64,13 +64,14 @@ const Card: React.FC<{ spec: CardSpec; frame: number }> = ({
           width: 110,
           padding: "18px 0",
           borderRadius: 12,
-          border: "1px solid rgba(255,255,255,0.18)",
-          background: "rgba(255,255,255,0.04)",
+          border: "1px solid rgba(28,24,20,0.16)",
+          background: "rgba(28,24,20,0.03)",
+          boxShadow: "0 14px 22px rgba(28,24,20,0.14)",
           display: "flex",
           justifyContent: "center",
         }}
       >
-        <PlayerSilhouette size={56} color="rgba(255,255,255,0.85)" />
+        <PlayerSilhouette size={56} color="rgba(28,24,20,0.82)" />
       </div>
     </div>
   );

@@ -1,19 +1,23 @@
 import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
-import { GlowText } from "../components/GlowText";
-import { RedX } from "../components/RedX";
+import { InkText } from "../components/InkText";
+import { StampX } from "../components/StampX";
+import { GateFrame } from "../components/GateFrame";
+import { PaperCanvas } from "../three/PaperCanvas";
 import { useBass } from "../hooks/useBass";
 
 interface SceneMythBusterProps {
   durationInFrames: number;
   word: string;
-  Icon: React.FC<{ size: number }>;
+  Model: React.FC<{ entrance: number }>;
 }
+
+const GATE_SIZE = 380;
 
 export const SceneMythBuster: React.FC<SceneMythBusterProps> = ({
   durationInFrames,
   word,
-  Icon,
+  Model,
 }) => {
   const frame = useCurrentFrame();
   const bass = useBass();
@@ -26,47 +30,79 @@ export const SceneMythBuster: React.FC<SceneMythBusterProps> = ({
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
   );
 
-  const iconScale = interpolate(frame, [0, fadeDur], [0.8, 1], {
+  const gateDur = Math.max(6, durationInFrames * 0.32);
+  const gateProgress = interpolate(frame, [0, gateDur], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  const bounce = interpolate(bass, [0, 1], [0, 5]);
+  const modelEntrance = interpolate(
+    frame,
+    [gateDur * 0.2, gateDur + 4],
+    [0, 1],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+  );
+  const trackIn = interpolate(frame, [gateDur, gateDur + 14], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
 
-  const xStartAt = durationInFrames * 0.42;
-  const xDrawDur = Math.max(4, durationInFrames * 0.3);
-  const xProgress = interpolate(frame, [xStartAt, xStartAt + xDrawDur], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
+  const xStartAt = durationInFrames * 0.6;
+  const xDrawDur = Math.max(4, durationInFrames * 0.28);
+  const xProgress = interpolate(
+    frame,
+    [xStartAt, xStartAt + xDrawDur],
+    [0, 1],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+  );
   const xOpacity = interpolate(frame, [xStartAt - 1, xStartAt + 1], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
 
-  const iconSize = 108;
+  const bounce = interpolate(bass, [0, 1], [0, 4]);
 
   return (
-    <AbsoluteFill
-      style={{ justifyContent: "center", alignItems: "center", opacity }}
-    >
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <AbsoluteFill style={{ opacity }}>
+      <PaperCanvas>
+        <Model entrance={modelEntrance} />
+      </PaperCanvas>
+
+      <AbsoluteFill
+        style={{ justifyContent: "center", alignItems: "center" }}
+      >
         <div
           style={{
             position: "relative",
-            width: iconSize,
-            height: iconSize,
-            transform: `translateY(-${bounce}px) scale(${iconScale})`,
+            width: GATE_SIZE,
+            height: GATE_SIZE,
+            transform: `translateY(-${bounce}px)`,
           }}
         >
-          <Icon size={iconSize} />
-          <RedX size={iconSize} progress={xProgress} opacity={xOpacity} />
+          <GateFrame size={GATE_SIZE} progress={gateProgress} />
+          <StampX
+            size={GATE_SIZE * 0.82}
+            progress={xProgress}
+            opacity={xOpacity}
+          />
         </div>
-        <div style={{ marginTop: 26 }}>
-          <GlowText fontSize={52} letterSpacing="0.08em" bassScale={0.02}>
-            {word}
-          </GlowText>
-        </div>
-      </div>
+      </AbsoluteFill>
+
+      <AbsoluteFill
+        style={{
+          justifyContent: "flex-end",
+          alignItems: "center",
+          paddingBottom: 480,
+        }}
+      >
+        <InkText
+          fontSize={50}
+          letterSpacing="0.14em"
+          bassScale={0.02}
+          trackIn={trackIn}
+        >
+          {word}
+        </InkText>
+      </AbsoluteFill>
     </AbsoluteFill>
   );
 };

@@ -7,22 +7,20 @@ import { Scene3Mistake } from "./scenes/Scene3Mistake";
 import { SceneMythBuster } from "./scenes/SceneMythBuster";
 import { Scene7Mentality } from "./scenes/Scene7Mentality";
 import { Scene8MentallyWeak } from "./scenes/Scene8MentallyWeak";
-import {
-  FootballIcon,
-  TacticalBoardIcon,
-  FitnessIcon,
-} from "./components/IconIllustrations";
+import { Football3D } from "./three/models/Football3D";
+import { Eyeball3D } from "./three/models/Eyeball3D";
+import { Barbell3D } from "./three/models/Barbell3D";
 import { TIMING, MYTH_SCENES } from "./timing";
 
-const ICONS: Record<string, React.FC<{ size: number }>> = {
-  technical: FootballIcon,
-  tactical: TacticalBoardIcon,
-  physical: FitnessIcon,
+const MODELS: Record<string, React.FC<{ entrance: number }>> = {
+  technical: Football3D,
+  tactical: Eyeball3D,
+  physical: Barbell3D,
 };
 
 export const MentalityVideo: React.FC = () => {
   return (
-    <AbsoluteFill style={{ backgroundColor: "#000000" }}>
+    <AbsoluteFill style={{ backgroundColor: "#f8f6f1" }}>
       <Background />
 
       <Audio src={staticFile("voiceover.wav")} />
@@ -59,7 +57,7 @@ export const MentalityVideo: React.FC = () => {
           <SceneMythBuster
             durationInFrames={scene.end - scene.start}
             word={scene.word}
-            Icon={ICONS[scene.key]}
+            Model={MODELS[scene.key]}
           />
         </Sequence>
       ))}

@@ -53,9 +53,9 @@ export const Scene8MentallyWeak: React.FC<{ durationInFrames: number }> = ({
         <div
           style={{
             ...textStyle,
-            color: "#ff2d2d",
+            color: "#6b6459",
             transform: `translate(${-glitchOffset}px, 0)`,
-            opacity: 0.55,
+            opacity: 0.5,
           }}
         >
           MENTALLY WEAK
@@ -63,9 +63,9 @@ export const Scene8MentallyWeak: React.FC<{ durationInFrames: number }> = ({
         <div
           style={{
             ...textStyle,
-            color: "#2de0ff",
+            color: "#000000",
             transform: `translate(${glitchOffset}px, 0)`,
-            opacity: 0.55,
+            opacity: 0.4,
           }}
         >
           MENTALLY WEAK
@@ -73,8 +73,8 @@ export const Scene8MentallyWeak: React.FC<{ durationInFrames: number }> = ({
         <div
           style={{
             ...textStyle,
-            color: "#ffffff",
-            textShadow: `0 0 ${18 + glitchOffset * 3}px rgba(255,255,255,0.8)`,
+            color: "#1a1815",
+            textShadow: `0 ${8 + glitchOffset}px ${18 + glitchOffset * 3}px rgba(20,17,12,0.3)`,
           }}
         >
           MENTALLY WEAK
