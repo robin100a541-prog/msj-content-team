@@ -1,5 +1,11 @@
 import React from "react";
-import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
+import {
+  AbsoluteFill,
+  interpolate,
+  spring,
+  useCurrentFrame,
+  useVideoConfig,
+} from "remotion";
 import { InkText } from "../components/InkText";
 import { StampX } from "../components/StampX";
 import { GateFrame } from "../components/GateFrame";
@@ -20,6 +26,7 @@ export const SceneMythBuster: React.FC<SceneMythBusterProps> = ({
   Model,
 }) => {
   const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
   const bass = useBass();
 
   const fadeDur = Math.max(4, Math.min(8, Math.floor(durationInFrames * 0.18)));
@@ -35,12 +42,11 @@ export const SceneMythBuster: React.FC<SceneMythBusterProps> = ({
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  const modelEntrance = interpolate(
-    frame,
-    [gateDur * 0.2, gateDur + 4],
-    [0, 1],
-    { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
-  );
+  const modelEntrance = spring({
+    frame: frame - gateDur * 0.2,
+    fps,
+    config: { damping: 11, stiffness: 140, mass: 0.7 },
+  });
   const trackIn = interpolate(frame, [gateDur, gateDur + 14], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",

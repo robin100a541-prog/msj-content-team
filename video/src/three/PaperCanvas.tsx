@@ -24,10 +24,11 @@ export const PaperCanvas: React.FC<PaperCanvasProps> = ({
   const t = frame / fps;
 
   // Camera stays on-axis (looking straight at the origin) so the model is
-  // always screen-centered -- the "pan" comes from a tiny rotation instead
-  // of a lateral offset, and the "zoom" from a slow dolly-in on Z.
-  const pan = Math.sin(t * 0.4) * 0.035;
-  const camZ = 10.5 - Math.min(t * 0.15, 1.2);
+  // always screen-centered -- the "pan" comes from a rotation instead of a
+  // lateral offset, and there's a brisk dolly-in so the zoom actually reads
+  // within these short (1.5-2.5s) scenes.
+  const pan = Math.sin(t * 0.9) * 0.09;
+  const camZ = 11.5 - Math.min(t * 1.2, 1.4);
 
   return (
     <ThreeCanvas
@@ -44,14 +45,15 @@ export const PaperCanvas: React.FC<PaperCanvasProps> = ({
         rotation={[0, pan, 0]}
         fov={30}
       />
-      <ambientLight intensity={0.7} />
+      <ambientLight intensity={0.55} />
       <directionalLight
         position={[2.4, 4, 3]}
-        intensity={1.05}
+        intensity={1.3}
         castShadow
         shadow-mapSize={[512, 512]}
       />
-      <directionalLight position={[-2.6, 1.2, -2]} intensity={0.3} />
+      <directionalLight position={[-2.8, 1.2, -2.2]} intensity={0.35} />
+      <directionalLight position={[0, 1.5, -3.5]} intensity={0.5} color="#ffffff" />
       {children}
       <ContactShadows
         position={[0, -1.05, 0]}

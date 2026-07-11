@@ -1,5 +1,11 @@
 import React from "react";
-import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
+import {
+  AbsoluteFill,
+  interpolate,
+  spring,
+  useCurrentFrame,
+  useVideoConfig,
+} from "remotion";
 import { InkText } from "../components/InkText";
 import { GateFrame } from "../components/GateFrame";
 import { PaperCanvas } from "../three/PaperCanvas";
@@ -12,6 +18,7 @@ export const Scene7Mentality: React.FC<{ durationInFrames: number }> = ({
   durationInFrames,
 }) => {
   const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
   const bass = useBass();
 
   const fadeIn = interpolate(frame, [0, 6], [0, 1], {
@@ -33,9 +40,10 @@ export const Scene7Mentality: React.FC<{ durationInFrames: number }> = ({
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  const brainEntrance = interpolate(frame, [2, 14], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
+  const brainEntrance = spring({
+    frame: frame - 2,
+    fps,
+    config: { damping: 11, stiffness: 140, mass: 0.7 },
   });
   const brainFadeOut = interpolate(
     frame,

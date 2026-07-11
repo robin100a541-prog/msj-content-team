@@ -3,30 +3,31 @@ import { useCurrentFrame } from "remotion";
 
 export const Barbell3D: React.FC<{ entrance: number }> = ({ entrance }) => {
   const frame = useCurrentFrame();
-  const scale = 0.2 + 0.8 * entrance;
-  const rotY = frame * 0.01;
+  const scale = 0.13 + 0.85 * entrance;
+  const rotY = frame * 0.04;
+  const bob = Math.sin(frame * 0.1) * 0.05;
 
   return (
     <group
       scale={scale}
-      rotation={[0.05, rotY, Math.PI / 2]}
-      position={[0, 0, 0]}
+      rotation={[0.1, rotY, Math.PI / 2]}
+      position={[0, bob, 0]}
     >
       <mesh castShadow>
-        <cylinderGeometry args={[0.055, 0.055, 2.3, 20]} />
+        <cylinderGeometry args={[0.05, 0.05, 1.6, 20]} />
         <meshStandardMaterial color="#e7e3d9" roughness={0.4} metalness={0.15} />
       </mesh>
       {[-1, 1].map((side) =>
         [0, 1].map((i) => (
           <mesh
             key={`${side}-${i}`}
-            position={[0, side * (0.95 + i * 0.16), 0]}
+            position={[0, side * (0.62 + i * 0.13), 0]}
             castShadow
           >
             <cylinderGeometry
-              args={[0.5 - i * 0.08, 0.5 - i * 0.08, 0.12, 32]}
+              args={[0.36 - i * 0.06, 0.36 - i * 0.06, 0.11, 32]}
             />
-            <meshStandardMaterial color="#efece4" roughness={0.55} />
+            <meshStandardMaterial color="#efece4" roughness={0.5} />
           </mesh>
         ))
       )}
