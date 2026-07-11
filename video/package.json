@@ -1,0 +1,22 @@
+{
+  "name": "msj-mentality-video",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "remotion studio src/index.ts",
+    "build": "remotion render src/index.ts Mentality out/mentality.mp4",
+    "still": "remotion still src/index.ts Mentality out/still.png"
+  },
+  "dependencies": {
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.286",
+    "@remotion/cli": "4.0.286",
+    "@remotion/media-utils": "4.0.286"
+  },
+  "devDependencies": {
+    "typescript": "5.6.3",
+    "@types/react": "18.3.12",
+    "@types/node": "22.9.0"
+  }
+}
